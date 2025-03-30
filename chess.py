@@ -10,24 +10,25 @@ chess_board = [
 ]
 
 board = [
-    [".", ".", "."],
-    [".", ".", "."],
-    [".", ".", "."],
-    ["p", ".", "."]
+    ["p", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", "."]
 ]
 
 def findRowCol():
     found = False
     for row in range(len(board)):
-        print(f"row: {row}")
+        # print(f"row: {row}")
         for col in range(len(board[0])):
-            print(f"    col: {col}")
+            # print(f"    col: {col}")
             if board[row][col] == "p":
-                print(board[row][col])
+                # print(board[row][col])
                 found = True    
                 break
-            else:
-                print("a")
         if found:
             print(f"Row and col of p: {row}, {col}")
             show_board(board)
@@ -37,35 +38,38 @@ def show_board(board):
     for row in board:
         print(" ".join(row))
 
-def move_piece(board, old_row, old_col, key):
+def move_piece(board, old_row, old_col):
     new_row = old_row
     new_col = old_col
-    if (key == "r"):
-        new_col+=1
-    elif (key == "l"):
-        new_col-=1
-    elif (key == "u"):
-        new_row-=1
-    elif (key == "d"):
-        new_row+=1
-    else:
-        print("Wrong operator! Please use u,d,l, or r")
-    
-    print(new_col)
+
+    wrong_operator = True
+    while wrong_operator:
+        key = input("Enter direction u, d, l, or r: ")
+
+        if (key == "r"):
+            new_col+=1
+            break
+        elif (key == "l"):
+            new_col-=1
+            break
+        elif (key == "u"):
+            new_row-=1
+            break
+        elif (key == "d"):
+            new_row+=1
+            break
+        else:
+            print("Wrong operator! Please use u,d,l, or r")
+            wrong_operator = True
 
     board[new_row][new_col] = board[old_row][old_col]
-    board[old_row][old_col] = "#"  # clear old position
-
-show_board(board)
-
-
+    board[old_row][old_col] = "."  # clear old position
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     old_row, old_col = findRowCol()
-    key = input("Enter direction u, d, l, or r: ")
 
-    move_piece(board, old_row, old_col, key)
+    move_piece(board, old_row, old_col)
     show_board(board)
 
 
