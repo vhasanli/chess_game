@@ -2,12 +2,13 @@
 import subprocess
 
 def run_command(command):
+    formatted_command = " ".join(command)
     result = subprocess.run(command, capture_output=True, text=True)
     if result.returncode != 0:
         print("Error:", result.stderr)
     else:
         print(result.stdout)
-        print(command)
+        print(formatted_command)
 
 def main():
     commit_message = input("Enter commit message: ")
