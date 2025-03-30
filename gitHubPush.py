@@ -7,6 +7,7 @@ def run_command(command):
         print("Error:", result.stderr)
     else:
         print(result.stdout)
+        print(command)
 
 def main():
     commit_message = input("Enter commit message: ")
