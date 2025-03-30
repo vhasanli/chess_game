@@ -54,7 +54,7 @@ def move_piece(board, old_row, old_col, key):
     print(new_col)
 
     board[new_row][new_col] = board[old_row][old_col]
-    board[old_row][old_col] = "."  # clear old position
+    board[old_row][old_col] = "#"  # clear old position
 
 show_board(board)
 
