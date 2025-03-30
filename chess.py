@@ -30,26 +30,42 @@ def findRowCol():
                 print("a")
         if found:
             print(f"Row and col of p: {row}, {col}")
-            print_board(board)
+            show_board(board)
             return row, col
     
-def print_board(board):
+def show_board(board):
     for row in board:
         print(" ".join(row))
 
-def move_piece(board, old_row, old_col, new_row, new_col):
+def move_piece(board, old_row, old_col, key):
+    new_row = old_row
+    new_col = old_col
+    if (key == "r"):
+        new_col+=1
+    elif (key == "l"):
+        new_col-=1
+    elif (key == "u"):
+        new_row-=1
+    elif (key == "d"):
+        new_row+=1
+    else:
+        print("Wrong operator! Please use u,d,l, or r")
+    
+    print(new_col)
+
     board[new_row][new_col] = board[old_row][old_col]
     board[old_row][old_col] = "."  # clear old position
 
-print_board(board)
+show_board(board)
+
+
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     old_row, old_col = findRowCol()
-    new_row = int(input("Enter new_row: "))
-    new_col = int(input("Enter new_col: "))
+    key = input("Enter direction u, d, l, or r: ")
 
-    move_piece(board, old_row, old_col, new_row, new_col)
-    print_board(board)
+    move_piece(board, old_row, old_col, key)
+    show_board(board)
 
 
