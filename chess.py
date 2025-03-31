@@ -15,7 +15,6 @@ board = [
     [".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."],
     [".", ".", ".", ".", ".", "."]
 ]
 
@@ -38,6 +37,17 @@ def show_board(board):
     for row in board:
         print(" ".join(row))
 
+def checkBounds(rowColNum):
+    if rowColNum < 0:
+        print(f"Out of bounds: no such left row {rowColNum}")
+        rowColNum +=1
+        print(rowColNum)
+    elif rowColNum >= len(board[0]):
+            print(f"Out of bounds: no such righ column {rowColNum}")
+            rowColNum -=1
+            print(rowColNum)
+    return rowColNum
+
 def move_piece(board, old_row, old_col):
     new_row = old_row
     new_col = old_col
@@ -48,28 +58,34 @@ def move_piece(board, old_row, old_col):
 
         if (key == "r"):
             new_col+=1
+            new_col = checkBounds(new_col)
             break
         elif (key == "l"):
             new_col-=1
+            new_col = checkBounds(new_col)
             break
         elif (key == "u"):
             new_row-=1
+            new_row = checkBounds(new_row)
             break
         elif (key == "d"):
             new_row+=1
+            new_row = checkBounds(new_row)
             break
         else:
             print("Wrong operator! Please use u,d,l, or r")
             wrong_operator = True
-
-    board[new_row][new_col] = board[old_row][old_col]
-    board[old_row][old_col] = "."  # clear old position
+            
+    if (new_row == old_row) and (new_col == old_col):
+        print("Wrong move!")
+    else:
+        board[new_row][new_col] = board[old_row][old_col]
+        board[old_row][old_col] = "."  # clear old position
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     old_row, old_col = findRowCol()
 
     move_piece(board, old_row, old_col)
-    show_board(board)
 
 
