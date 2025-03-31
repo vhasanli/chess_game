@@ -10,12 +10,14 @@ chess_board = [
 ]
 
 board = [
-    ["p", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."],
-    [".", ".", ".", ".", ".", "."]
+    ["p", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."],
+    [".", ".", ".", ".", ".", ".", ".", "."]
 ]
 
 def findRowCol():
@@ -39,11 +41,9 @@ def show_board(board):
 
 def checkBounds(rowColNum):
     if rowColNum < 0:
-        print(f"Out of bounds: no such left row {rowColNum}")
+        print("Out of bounds!")
         rowColNum +=1
-        print(rowColNum)
     elif rowColNum >= len(board[0]):
-            print(f"Out of bounds: no such righ column {rowColNum}")
             rowColNum -=1
             print(rowColNum)
     return rowColNum
@@ -75,7 +75,7 @@ def move_piece(board, old_row, old_col):
         else:
             print("Wrong operator! Please use u,d,l, or r")
             wrong_operator = True
-            
+
     if (new_row == old_row) and (new_col == old_col):
         print("Wrong move!")
     else:
