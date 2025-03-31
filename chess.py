@@ -85,8 +85,12 @@ def move_piece(board, piece):
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
+    print("############################")
+    print("---------Chess Game---------")
+    print("############################")
     show_board(board)
     piece = input("Which piece do you want to move?")
     move_piece(board, piece)
+    print("############################")
 
 
