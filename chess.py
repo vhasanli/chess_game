@@ -47,6 +47,23 @@ def checkBounds(rowColNum):
             print(rowColNum)
     return rowColNum
 
+def pawnMoveRules(old_pos, new_pos):
+    # p can move only down one step at a time
+    print(old_pos, new_pos)
+    if old_pos[1] != new_pos[1]:
+        print("Illegal move: right or left")
+        return 1
+    elif old_pos[0] > new_pos[0]:
+        print("Illegal move: Backwards move!")
+        return 2
+    elif (new_pos[0] == old_pos[0]) and (new_pos[1] == old_pos[1]):
+        # Out of bounds
+        return 3
+    else:
+        print("Legal move")
+    # P can move only up one step at a time
+    return 0
+
 def move_piece(board, piece):
     old_row, old_col = findRowCol(piece)
     
@@ -77,20 +94,30 @@ def move_piece(board, piece):
             print("Wrong operator! Please use u,d,l, or r")
             wrong_operator = True
 
+    old_pos = (old_row, old_col)
+    new_pos = (new_row, new_col)
+
+    if piece == ("p" or "P"):
+        status = pawnMoveRules(old_pos, new_pos)
+        if status == 0:
+            board[new_row][new_col] = board[old_row][old_col]
+            board[old_row][old_col] = "."  # clear old position
+
     if (new_row == old_row) and (new_col == old_col):
-        print("Wrong move!")
+        print("Out of Bounds!")
     else:
-        board[new_row][new_col] = board[old_row][old_col]
-        board[old_row][old_col] = "."  # clear old position
+        pass
+        # board[new_row][new_col] = board[old_row][old_col]
+        # board[old_row][old_col] = "."  # clear old position
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     print("############################")
     print("---------Chess Game---------")
     print("############################")
+
     show_board(board)
     piece = input("Which piece do you want to move?")
     move_piece(board, piece)
-    print("############################")
 
 
