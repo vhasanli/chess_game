@@ -103,13 +103,6 @@ def move_piece(board, piece):
             board[new_row][new_col] = board[old_row][old_col]
             board[old_row][old_col] = "."  # clear old position
 
-    if (new_row == old_row) and (new_col == old_col):
-        print("Out of Bounds!")
-    else:
-        pass
-        # board[new_row][new_col] = board[old_row][old_col]
-        # board[old_row][old_col] = "."  # clear old position
-
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     print("############################")
