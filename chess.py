@@ -50,12 +50,12 @@ def show_board(board):
         print(" ".join(row))
 
 def checkBounds(rowColNum):
-    if rowColNum < 0:
+    if rowColNum < 1:
         print("Out of bounds!")
         rowColNum +=1
-    elif rowColNum >= len(board[0]):
-            rowColNum -=1
-            print(rowColNum)
+    elif rowColNum >= (len(board[0]) - 1):
+        rowColNum -=1
+        print("Out of bounds!")
     return rowColNum
 
 def pawnMoveRules(old_pos, new_pos):
@@ -74,6 +74,20 @@ def pawnMoveRules(old_pos, new_pos):
     else:
         print("Legal move")
         return 0
+    
+
+def movePawn(board, file, rank):
+    old_row, old_col = chess_to_index(file, rank)    
+    new_row = old_row
+    new_row+=1
+    new_row = checkBounds(new_row)
+    old_pos = (old_row, old_col)
+    new_pos = (new_row, old_col)
+    status = pawnMoveRules(old_pos, new_pos)
+    if status == 0:
+        board[new_row][old_col] = board[old_row][old_col]
+        board[old_row][old_col] = "."  # clear old position
+
     
 def move_piece(board, piece):
     old_row, old_col = findRowCol(piece)
@@ -113,25 +127,6 @@ def move_piece(board, piece):
         if status == 0:
             board[new_row][new_col] = board[old_row][old_col]
             board[old_row][old_col] = "."  # clear old position
-
-def movePawn(board, file, rank):
-    # old_row, old_col = findRowCol(piece, col)
-    old_row, old_col = chess_to_index(file, rank)    
-    new_row = old_row
-    wrong_operator = True
-    while wrong_operator:
-        new_row+=1
-        new_row = checkBounds(new_row)
-        old_pos = (old_row, old_col)
-        new_pos = (new_row, old_col)
-        status = pawnMoveRules(old_pos, new_pos)
-        if status == 0:
-            board[new_row][old_col] = board[old_row][old_col]
-            board[old_row][old_col] = "."  # clear old position
-            break
-        else:
-            print("Wrong operator! Please use u, d, l, or r")
-            wrong_operator = True
 
 
 while True:
