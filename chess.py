@@ -26,24 +26,6 @@ def chess_to_index(file, rank):
     col = ord(file) - ord('a') + 1  # Convert 'a' -> 1, 'b' -> 2, ..., 'h' -> 8
     row = 9 - int(rank)  # Convert '8' -> 1, '7' -> 2, ..., '1' -> 8 (in board index)
     return row, col
-
-def findRowCol(piece, col):
-    found = False
-    for row in range(len(board)):
-        # print(f"row: {row}")
-        if board[row][col] == piece:
-            # print(board[row][col])
-            found = True    
-            break
-        # for col in range(len(board[0])):
-        #     # print(f"    col: {col}")
-        #     if board[row][col] == piece:
-        #         # print(board[row][col])
-        #         found = True    
-        #         break
-    if found:
-        print(f"Row and col of p: {row}, {col}")
-        return row, col
     
 def show_board(board):
     for row in board:
@@ -74,16 +56,19 @@ def pawnMoveRules(old_pos, new_pos):
     else:
         print("Legal move")
         return 0
-    
 
 def movePawn(board, file, rank):
     old_row, old_col = chess_to_index(file, rank)    
     new_row = old_row
-    new_row+=1
-    new_row = checkBounds(new_row)
+    
+    new_row+=1  # advance to the next row
+    new_row = checkBounds(new_row) # if out of bounds, don't advance
+
     old_pos = (old_row, old_col)
     new_pos = (new_row, old_col)
+
     status = pawnMoveRules(old_pos, new_pos)
+    
     if status == 0:
         board[new_row][old_col] = board[old_row][old_col]
         board[old_row][old_col] = "."  # clear old position
@@ -99,6 +84,9 @@ while True:
     file = input("Enter file of a piece: ")
     rank = input("Enter rank of a piece: ")
 
-    movePawn(board, file, rank)
+    if (ord(file) >= 97 and ord(file) <= 104) and (int(rank) >= 1 and int(rank) <= 8): 
+        movePawn(board, file, rank)
+    else:
+        print("Please enter a valid values: ")
 
 
