@@ -22,6 +22,10 @@ board = [
     [" ", "a", "b", "c", "d", "e", "f", "g", "h", " "]   
 ]
 
+def chess_to_index(file, rank):
+    col = ord(file) - ord('a') + 1  # Convert 'a' -> 1, 'b' -> 2, ..., 'h' -> 8
+    row = 9 - int(rank)  # Convert '8' -> 1, '7' -> 2, ..., '1' -> 8 (in board index)
+    return row, col
 
 def findRowCol(piece, col):
     found = False
@@ -110,18 +114,19 @@ def move_piece(board, piece):
             board[new_row][new_col] = board[old_row][old_col]
             board[old_row][old_col] = "."  # clear old position
 
-def movePawn(board, piece, new_col):
-    old_row, old_col = findRowCol(piece, col)    
+def movePawn(board, file, rank):
+    # old_row, old_col = findRowCol(piece, col)
+    old_row, old_col = chess_to_index(file, rank)    
     new_row = old_row
     wrong_operator = True
     while wrong_operator:
         new_row+=1
         new_row = checkBounds(new_row)
         old_pos = (old_row, old_col)
-        new_pos = (new_row, new_col)
+        new_pos = (new_row, old_col)
         status = pawnMoveRules(old_pos, new_pos)
         if status == 0:
-            board[new_row][new_col] = board[old_row][old_col]
+            board[new_row][old_col] = board[old_row][old_col]
             board[old_row][old_col] = "."  # clear old position
             break
         else:
@@ -136,9 +141,9 @@ while True:
     print("############################")
 
     show_board(board)
-    piece = input("Which piece do you want to move? ")
-    col = int(input("Which column? "))
-    # move_piece(board, piece, col)
-    movePawn(board, piece, col)
+    file = input("Enter file of a piece: ")
+    rank = input("Enter rank of a piece: ")
+
+    movePawn(board, file, rank)
 
 
