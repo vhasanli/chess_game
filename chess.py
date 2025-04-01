@@ -88,46 +88,6 @@ def movePawn(board, file, rank):
         board[new_row][old_col] = board[old_row][old_col]
         board[old_row][old_col] = "."  # clear old position
 
-    
-def move_piece(board, piece):
-    old_row, old_col = findRowCol(piece)
-    
-    new_row = old_row
-    new_col = old_col
-
-    wrong_operator = True
-    while wrong_operator:
-        key = input("Enter direction u, d, l, or r: ")
-
-        if (key == "r"):
-            new_col+=1
-            new_col = checkBounds(new_col)
-            break
-        elif (key == "l"):
-            new_col-=1
-            new_col = checkBounds(new_col)
-            break
-        elif (key == "u"):
-            new_row-=1
-            new_row = checkBounds(new_row)
-            break
-        elif (key == "d"):
-            new_row+=1
-            new_row = checkBounds(new_row)
-            break
-        else:
-            print("Wrong operator! Please use u,d,l, or r")
-            wrong_operator = True
-
-    old_pos = (old_row, old_col)
-    new_pos = (new_row, new_col)
-
-    if piece == ("p" or "P"):
-        status = pawnMoveRules(old_pos, new_pos)
-        if status == 0:
-            board[new_row][new_col] = board[old_row][old_col]
-            board[old_row][old_col] = "."  # clear old position
-
 
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
