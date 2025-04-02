@@ -30,22 +30,30 @@ board = [
     [PieceType.white_rook.value, PieceType.white_knight.value, PieceType.white_bishop.value, PieceType.white_queen.value, PieceType.white_king.value, PieceType.white_bishop.value, PieceType.white_knight.value, PieceType.white_rook.value]   # 1st rank
 ]
 
+def pieceRuleChecker(piece):
+    if piece == 7:
+        print("It is a pawn")
 
 def movePawn():
     pass
 
 def getMove(player, board):
-    cur_row = int(input("Enter current row of a piece: "))
-    cur_col = int(input("Enter current column of a piece: "))
-    next_row = int(input("Enter next row of a piece: "))
-    next_col = int(input("Enter next column of a piece: "))
+    # Prompt the user to enter four values (current row, current column, next row, next column)
+    move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
+    
+    # Split the input into separate values and convert them to integers
+    cur_row, cur_col, next_row, next_col = map(int, move_input.split())
+
     cur_pos = (cur_row, cur_col)
     next_pos = (next_row, next_col)
+
     return cur_pos, next_pos
 
-def attemptMove(cur_pos, next_pos):
+def attemptMove(cur_pos, next_pos, piece):
     print(board[cur_pos[0]][cur_pos[1]])
     print(board[next_pos[0]][next_pos[1]])
+
+    status = pieceRuleChecker(piece)
 
     board[next_pos[0]][next_pos[1]] =  board[cur_pos[0]][cur_pos[1]]
     board[cur_pos[0]][cur_pos[1]] = 0 # clear old position
@@ -68,6 +76,6 @@ while True:
 
     cur_pos, next_pos = getMove(PlayerType.player_white.value, board)
     
-    attemptMove(cur_pos, next_pos)
+    attemptMove(cur_pos, next_pos, 7)
 
     show_board()
