@@ -31,8 +31,32 @@ board = [
 ]
 
 def pieceRuleChecker(piece):
-    if piece == 7:
-        print("It is a pawn")
+    if piece == 0:
+        print("It is a empty")
+    elif piece == 1:
+        print("It is a white_pawn")
+    elif piece == 2:
+        print("It is a white_knight")
+    elif piece == 3:
+        print("It is a white_bishop")
+    elif piece == 4:
+        print("It is a white_rook")
+    elif piece == 5:
+        print("It is a white_queen")
+    elif piece == 6:
+        print("It is a white_king")
+    elif piece == 7:
+        print("It is a black_pawn")
+    elif piece == 8:
+        print("It is a black_knight")
+    elif piece == 9:
+        print("It is a black_bishop")
+    elif piece == 10:
+        print("It is a black_rook")
+    elif piece == 11:
+        print("It is a black_queen")
+    elif piece == 12:
+        print("It is a black_king")
 
 def movePawn():
     pass
@@ -76,6 +100,6 @@ while True:
 
     cur_pos, next_pos = getMove(PlayerType.player_white.value, board)
     
-    attemptMove(cur_pos, next_pos, 7)
+    attemptMove(cur_pos, next_pos, PieceType.black_rook.value)
 
     show_board()
