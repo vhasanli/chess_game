@@ -30,11 +30,28 @@ board = [
     [PieceType.white_rook.value, PieceType.white_knight.value, PieceType.white_bishop.value, PieceType.white_queen.value, PieceType.white_king.value, PieceType.white_bishop.value, PieceType.white_knight.value, PieceType.white_rook.value]   # 1st rank
 ]
 
-def pieceRuleChecker(piece):
+def pawn_rule_checker(player, cur_pos, next_pos):
+    if player == 0:
+        # Can only go up
+        if cur_pos[0] < next_pos[0]:
+            print("Backwards move")
+            status = 1
+        else:
+            status = 0
+
+        pass
+    else:
+        # Can only go down
+        pass
+    return status
+
+def piece_rule_checker(player, piece, cur_pos, next_pos):
+    status = 0
     if piece == 0:
         print("It is a empty")
     elif piece == 1:
         print("It is a white_pawn")
+        status = pawn_rule_checker(player, cur_pos, next_pos)
     elif piece == 2:
         print("It is a white_knight")
     elif piece == 3:
@@ -57,11 +74,9 @@ def pieceRuleChecker(piece):
         print("It is a black_queen")
     elif piece == 12:
         print("It is a black_king")
+    return status
 
-def movePawn():
-    pass
-
-def getMove(player, board):
+def get_move(player, board):
     # Prompt the user to enter four values (current row, current column, next row, next column)
     move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
     
@@ -73,15 +88,18 @@ def getMove(player, board):
 
     return cur_pos, next_pos
 
-def attemptMove(cur_pos, next_pos, piece):
+def attempt_move(player, piece, cur_pos, next_pos):
     print(board[cur_pos[0]][cur_pos[1]])
     print(board[next_pos[0]][next_pos[1]])
 
-    status = pieceRuleChecker(piece)
+    status = piece_rule_checker(player, piece, cur_pos, next_pos,)
 
-    board[next_pos[0]][next_pos[1]] =  board[cur_pos[0]][cur_pos[1]]
-    board[cur_pos[0]][cur_pos[1]] = 0 # clear old position
-
+    if status == 0:
+        board[next_pos[0]][next_pos[1]] =  board[cur_pos[0]][cur_pos[1]]
+        board[cur_pos[0]][cur_pos[1]] = 0 # clear old position
+        print("Legal Move!")
+    else:
+        print("Illegal Move!")
     pass
 
 def show_board():
@@ -98,8 +116,8 @@ while True:
     print("---------Chess Game---------")
     print("############################")
 
-    cur_pos, next_pos = getMove(PlayerType.player_white.value, board)
+    cur_pos, next_pos = get_move(PlayerType.player_white.value, board)
     
-    attemptMove(cur_pos, next_pos, PieceType.black_rook.value)
+    attempt_move(PlayerType.player_white.value, PieceType.white_pawn.value, cur_pos, next_pos)
 
     show_board()
