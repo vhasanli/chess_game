@@ -35,23 +35,20 @@ def pawn_rule_checker(player, cur_pos, next_pos):
         # Can only go up
         if cur_pos[0] < next_pos[0]:
             print("Backwards move")
-            status = 1
+            return False
         else:
-            status = 0
-
-        pass
+            pass    
     else:
         # Can only go down
         pass
-    return status
+    return True
 
 def piece_rule_checker(player, piece, cur_pos, next_pos):
-    status = 0
     if piece == 0:
         print("It is a empty")
     elif piece == 1:
         print("It is a white_pawn")
-        status = pawn_rule_checker(player, cur_pos, next_pos)
+        return pawn_rule_checker(player, cur_pos, next_pos)
     elif piece == 2:
         print("It is a white_knight")
     elif piece == 3:
@@ -74,7 +71,6 @@ def piece_rule_checker(player, piece, cur_pos, next_pos):
         print("It is a black_queen")
     elif piece == 12:
         print("It is a black_king")
-    return status
 
 def get_move(player, board):
     # Prompt the user to enter four values (current row, current column, next row, next column)
@@ -92,9 +88,9 @@ def attempt_move(player, piece, cur_pos, next_pos):
     print(board[cur_pos[0]][cur_pos[1]])
     print(board[next_pos[0]][next_pos[1]])
 
-    status = piece_rule_checker(player, piece, cur_pos, next_pos,)
+    legal = piece_rule_checker(player, piece, cur_pos, next_pos,)
 
-    if status == 0:
+    if legal:
         board[next_pos[0]][next_pos[1]] =  board[cur_pos[0]][cur_pos[1]]
         board[cur_pos[0]][cur_pos[1]] = 0 # clear old position
         print("Legal Move!")
