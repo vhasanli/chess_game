@@ -30,18 +30,27 @@ board = [
     [PieceType.white_rook.value, PieceType.white_knight.value, PieceType.white_bishop.value, PieceType.white_queen.value, PieceType.white_king.value, PieceType.white_bishop.value, PieceType.white_knight.value, PieceType.white_rook.value]   # 1st rank
 ]
 
+X = 0
+Y = 1
+
+def pos_to_value():
+    pass 
+
 def pawn_rule_checker(player, cur_pos, next_pos):
     if player == 0:
-        # Can only go up
-        if cur_pos[0] < next_pos[0]:
-            print("Backwards move")
-            return False
-        else:
-            pass    
-    else:
-        # Can only go down
-        pass
-    return True
+        # Can only go up and capture diagonally
+
+        if (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
+            print("Move left and up once")
+            return True
+        elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == cur_pos[Y]):
+            print("Forward move once")
+            return True
+        elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
+            print("Move right and up once")
+            return True
+
+    return False
 
 def piece_rule_checker(player, piece, cur_pos, next_pos):
     if piece == 0:
