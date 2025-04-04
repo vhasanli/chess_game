@@ -36,28 +36,33 @@ Y = 1
 def pos_to_value():
     pass 
 
-def pawn_rule_checker(player, cur_pos, next_pos):
+def pawn_rule_checker(board, player, cur_pos, next_pos):
     if player == 0:
         # Can only go up and capture diagonally
 
         if (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
-            print("Move left and up once")
-            return True
+            if (board[next_pos[X]][next_pos[Y]]) != 0:
+                print("Move left and up once")
+                return True
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == cur_pos[Y]):
-            print("Forward move once")
-            return True
+            if (board[next_pos[X]][next_pos[Y]]) == 0:
+                print("Forward move once")
+                return True
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
-            print("Move right and up once")
-            return True
+            if (board[next_pos[X]][next_pos[Y]]) != 0:
+                print("Move right and up once")
+                return True
+    else:
+        pass
 
     return False
 
-def piece_rule_checker(player, piece, cur_pos, next_pos):
+def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     if piece == 0:
         print("It is a empty")
     elif piece == 1:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos)
+        return pawn_rule_checker(board, player, cur_pos, next_pos)
     elif piece == 2:
         print("It is a white_knight")
     elif piece == 3:
@@ -81,7 +86,7 @@ def piece_rule_checker(player, piece, cur_pos, next_pos):
     elif piece == 12:
         print("It is a black_king")
 
-def get_move(player, board):
+def get_move(player):
     # Prompt the user to enter four values (current row, current column, next row, next column)
     move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
     
@@ -91,17 +96,17 @@ def get_move(player, board):
     cur_pos = (cur_row, cur_col)
     next_pos = (next_row, next_col)
 
-    return cur_pos, next_pos
+    return cur_pos, next_pos, player
 
-def attempt_move(player, piece, cur_pos, next_pos):
-    print(board[cur_pos[0]][cur_pos[1]])
-    print(board[next_pos[0]][next_pos[1]])
+def attempt_move(board, player, piece, cur_pos, next_pos):
+    print(board[cur_pos[X]][cur_pos[Y]])
+    print(board[next_pos[X]][next_pos[Y]])
 
-    legal = piece_rule_checker(player, piece, cur_pos, next_pos,)
+    legal = piece_rule_checker(board, player, piece, cur_pos, next_pos,)
 
     if legal:
-        board[next_pos[0]][next_pos[1]] =  board[cur_pos[0]][cur_pos[1]]
-        board[cur_pos[0]][cur_pos[1]] = 0 # clear old position
+        board[next_pos[X]][next_pos[Y]] =  board[cur_pos[X]][cur_pos[Y]]
+        board[cur_pos[X]][cur_pos[Y]] = 0 # clear old position
         print("Legal Move!")
     else:
         print("Illegal Move!")
@@ -111,18 +116,13 @@ def show_board():
     for row in board:
         print(row)
 
-show_board()
-
-
-
 while True:
     # For example, move 'b' from (1, 2) to (0, 0)
     print("############################")
     print("---------Chess Game---------")
     print("############################")
-
-    cur_pos, next_pos = get_move(PlayerType.player_white.value, board)
-    
-    attempt_move(PlayerType.player_white.value, PieceType.white_pawn.value, cur_pos, next_pos)
-
     show_board()
+
+    cur_pos, next_pos, player = get_move(PlayerType.player_white.value)
+    
+    attempt_move(board, player, PieceType.white_pawn.value, cur_pos, next_pos)
