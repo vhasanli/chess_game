@@ -50,7 +50,7 @@ def pawn_rule_checker(board, player, cur_pos, next_pos):
                 return True
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
             if (board[next_pos[X]][next_pos[Y]]) != 0:
-                print("Move right and up once")
+                print("Move right & up once")
                 return True
     else:
         pass
