@@ -99,8 +99,8 @@ def get_move(player):
     return cur_pos, next_pos, player
 
 def attempt_move(board, player, piece, cur_pos, next_pos):
-    print(board[cur_pos[X]][cur_pos[Y]])
-    print(board[next_pos[X]][next_pos[Y]])
+    # print(board[cur_pos[X]][cur_pos[Y]])
+    # print(board[next_pos[X]][next_pos[Y]])
 
     legal = piece_rule_checker(board, player, piece, cur_pos, next_pos,)
 
