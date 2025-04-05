@@ -52,6 +52,12 @@ def pawn_rule_checker(board, player, cur_pos, next_pos):
             if (board[next_pos[X]][next_pos[Y]]) != 0:
                 print("Move right & up once")
                 return True
+        elif ((cur_pos[X] == 6) and
+               (next_pos[X] == (cur_pos[X] - 2)) and
+                cur_pos[Y] == next_pos[Y]):
+                print("Move double")
+            # if (board[next_pos[X]][next_pos[Y]]) != 0:
+                return True
     else:
         pass
 
