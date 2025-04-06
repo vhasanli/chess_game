@@ -15,10 +15,6 @@ class PieceType(Enum):
     black_queen = 11
     black_king = 12
 
-class PlayerType(Enum):
-    player_white = 0
-    player_black = 1
-
 board = [
     [PieceType.black_rook.value, PieceType.black_knight.value, PieceType.black_bishop.value, PieceType.black_queen.value, PieceType.black_king.value, PieceType.black_bishop.value, PieceType.black_knight.value, PieceType.black_rook.value],  # 8th rank (black pieces)
     [PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value],  # 7th rank
@@ -115,13 +111,17 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == 12:
         print("It is a black_king")
 
-def get_move(player):
+def get_move():
+
+    player = int(input("Enter player: 0 for white, 1 for black: "))
+
     # Prompt the user to enter four values (current row, current column, next row, next column)
     move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
     
     # Split the input into separate values and convert them to integers
     cur_row, cur_col, next_row, next_col = map(int, move_input.split())
 
+    # Pack row and col into a tuple
     cur_pos = (cur_row, cur_col)
     next_pos = (next_row, next_col)
 
@@ -144,12 +144,11 @@ def show_board():
         print(row)
 
 while True:
-    # For example, move 'b' from (1, 2) to (0, 0)
     print("############################")
     print("---------Chess Game---------")
     print("############################")
     show_board()
 
-    cur_pos, next_pos, player = get_move(PlayerType.player_black.value)
+    cur_pos, next_pos, player = get_move()
     
     attempt_move(board, player, PieceType.black_pawn.value, cur_pos, next_pos)
