@@ -115,6 +115,8 @@ def get_move():
 
     player = int(input("Enter player: 0 for white, 1 for black: "))
 
+    piece = int(input("Enter piece you'd like to move: "))
+
     # Prompt the user to enter four values (current row, current column, next row, next column)
     move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
     
@@ -125,7 +127,7 @@ def get_move():
     cur_pos = (cur_row, cur_col)
     next_pos = (next_row, next_col)
 
-    return cur_pos, next_pos, player
+    return cur_pos, next_pos, player, piece
 
 def attempt_move(board, player, piece, cur_pos, next_pos):
 
@@ -149,6 +151,6 @@ while True:
     print("############################")
     show_board()
 
-    cur_pos, next_pos, player = get_move()
+    cur_pos, next_pos, player, piece = get_move()
     
-    attempt_move(board, player, PieceType.black_pawn.value, cur_pos, next_pos)
+    attempt_move(board, player, piece, cur_pos, next_pos)
