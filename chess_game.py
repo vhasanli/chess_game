@@ -1,6 +1,5 @@
 from enum import Enum
-
-from rules import pawn_rule_checker, X, Y
+from rules import piece_rule_checker, X, Y
 
 
 class PieceType(Enum):
@@ -32,40 +31,9 @@ board = [
 def pos_to_value():
     pass 
 
-def piece_rule_checker(board, player, piece, cur_pos, next_pos):
-    if piece == 0:
-        print("It is a empty")
-    elif piece == 1:
-        print("It is a white_pawn")
-        return pawn_rule_checker(board, player, cur_pos, next_pos)
-    elif piece == 2:
-        print("It is a white_knight")
-    elif piece == 3:
-        print("It is a white_bishop")
-    elif piece == 4:
-        print("It is a white_rook")
-    elif piece == 5:
-        print("It is a white_queen")
-    elif piece == 6:
-        print("It is a white_king")
-    elif piece == 7:
-        print("It is a black_pawn")
-        return pawn_rule_checker(board, player, cur_pos, next_pos)
-    elif piece == 8:
-        print("It is a black_knight")
-    elif piece == 9:
-        print("It is a black_bishop")
-    elif piece == 10:
-        print("It is a black_rook")
-    elif piece == 11:
-        print("It is a black_queen")
-    elif piece == 12:
-        print("It is a black_king")
-
 def get_move():
 
     player = int(input("Enter player: 0 for white, 1 for black: "))
-
     piece = int(input("Enter piece you'd like to move: "))
 
     # Prompt the user to enter four values (current row, current column, next row, next column)
