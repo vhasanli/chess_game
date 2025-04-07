@@ -32,22 +32,23 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_king")
 
 def pawn_rule_checker(board, player, cur_pos, next_pos):
+    next_piece = board[next_pos[X]][next_pos[Y]]
     if player == 0:
         print("Player White")
         # Can only go up and capture diagonally
             # Step left to capture
         if (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
-            if (board[next_pos[X]][next_pos[Y]]) != 0:
+            if ((next_piece != 0) and ((next_piece >= 7) and (next_piece <= 12))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == cur_pos[Y]):
-            if (board[next_pos[X]][next_pos[Y]]) == 0:
+            if (next_piece == 0):
                 print("Forward move once")
                 return True
             # Step right to capture
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
-            if (board[next_pos[X]][next_pos[Y]]) != 0:
+            if ((next_piece != 0) and ((next_piece >= 7) and (next_piece <= 12))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[X] == 6) and # For initial double move
@@ -55,21 +56,22 @@ def pawn_rule_checker(board, player, cur_pos, next_pos):
                 cur_pos[Y] == next_pos[Y]):
                 print("Move double")
                 return True
+                
     else:
         print("Player Black")
             # Step left to capture
         if (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
-            if (board[next_pos[X]][next_pos[Y]]) != 0:
+            if ((next_piece != 0) and ((next_piece >= 1) and (next_piece <= 6))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == cur_pos[Y]):
-            if (board[next_pos[X]][next_pos[Y]]) == 0:
+            if (next_piece == 0):
                 print("Forward move once")
                 return True
                 # Step right to capture
         elif (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
-            if (board[next_pos[X]][next_pos[Y]]) != 0:
+            if ((next_piece != 0) and ((next_piece >= 1) and (next_piece <= 6))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[X] == 1) and # For initial double move
