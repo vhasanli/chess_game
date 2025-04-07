@@ -2,11 +2,12 @@ X = 0
 Y = 1
 
 def piece_rule_checker(board, player, piece, cur_pos, next_pos):
+    next_piece = board[next_pos[X]][next_pos[Y]]
     if piece == 0:
         print("It is a empty")
     elif piece == 1:
         print("It is a white_pawn")
-        return pawn_rule_checker(board, player, cur_pos, next_pos)
+        return pawn_rule_checker(player, cur_pos, next_pos, next_piece)
     elif piece == 2:
         print("It is a white_knight")
     elif piece == 3:
@@ -19,7 +20,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a white_king")
     elif piece == 7:
         print("It is a black_pawn")
-        return pawn_rule_checker(board, player, cur_pos, next_pos)
+        return pawn_rule_checker(player, cur_pos, next_pos, next_piece)
     elif piece == 8:
         print("It is a black_knight")
     elif piece == 9:
@@ -31,8 +32,8 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == 12:
         print("It is a black_king")
 
-def pawn_rule_checker(board, player, cur_pos, next_pos):
-    next_piece = board[next_pos[X]][next_pos[Y]]
+def pawn_rule_checker(player, cur_pos, next_pos, next_piece):
+
     if player == 0:
         print("Player White")
         # Can only go up and capture diagonally
