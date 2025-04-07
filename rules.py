@@ -2,12 +2,12 @@ X = 0
 Y = 1
 
 def piece_rule_checker(board, player, piece, cur_pos, next_pos):
-    next_piece = board[next_pos[X]][next_pos[Y]]
+    piece_at_next_location = board[next_pos[X]][next_pos[Y]]
     if piece == 0:
         print("It is a empty")
     elif piece == 1:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, next_piece)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == 2:
         print("It is a white_knight")
     elif piece == 3:
@@ -20,7 +20,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a white_king")
     elif piece == 7:
         print("It is a black_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, next_piece)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == 8:
         print("It is a black_knight")
     elif piece == 9:
@@ -32,24 +32,24 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == 12:
         print("It is a black_king")
 
-def pawn_rule_checker(player, cur_pos, next_pos, next_piece):
+def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
 
     if player == 0:
         print("Player White")
         # Can only go up and capture diagonally
             # Step left to capture
         if (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
-            if ((next_piece != 0) and ((next_piece >= 7) and (next_piece <= 12))):
+            if ((piece_at_next_location != 0) and ((piece_at_next_location >= 7) and (piece_at_next_location <= 12))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == cur_pos[Y]):
-            if (next_piece == 0):
+            if (piece_at_next_location == 0):
                 print("Forward move once")
                 return True
             # Step right to capture
         elif (next_pos[X] == (cur_pos[X] - 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
-            if ((next_piece != 0) and ((next_piece >= 7) and (next_piece <= 12))):
+            if ((piece_at_next_location != 0) and ((piece_at_next_location >= 7) and (piece_at_next_location <= 12))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[X] == 6) and # For initial double move
@@ -62,17 +62,17 @@ def pawn_rule_checker(player, cur_pos, next_pos, next_piece):
         print("Player Black")
             # Step left to capture
         if (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == (cur_pos[Y] + 1)):
-            if ((next_piece != 0) and ((next_piece >= 1) and (next_piece <= 6))):
+            if ((piece_at_next_location != 0) and ((piece_at_next_location >= 1) and (piece_at_next_location <= 6))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == cur_pos[Y]):
-            if (next_piece == 0):
+            if (piece_at_next_location == 0):
                 print("Forward move once")
                 return True
                 # Step right to capture
         elif (next_pos[X] == (cur_pos[X] + 1)) and (next_pos[Y] == (cur_pos[Y] - 1)):
-            if ((next_piece != 0) and ((next_piece >= 1) and (next_piece <= 6))):
+            if ((piece_at_next_location != 0) and ((piece_at_next_location >= 1) and (piece_at_next_location <= 6))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[X] == 1) and # For initial double move
