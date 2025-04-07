@@ -14,6 +14,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a white_bishop")
     elif piece == 4:
         print("It is a white_rook")
+        return rook_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == 5:
         print("It is a white_queen")
     elif piece == 6:
@@ -31,6 +32,13 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_queen")
     elif piece == 12:
         print("It is a black_king")
+
+def rook_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
+    if player == 0:
+        pass
+    else:
+        pass
+    pass
 
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
 
