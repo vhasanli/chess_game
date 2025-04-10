@@ -9,7 +9,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a empty")
     elif piece == PieceType.WHITE_PAWN:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location.value)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
     elif piece == PieceType.WHITE_BISHOP:
@@ -23,7 +23,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a white_king")
     elif piece == PieceType.BLACK_PAWN:
         print("It is a black_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location.value)
     elif piece == PieceType.BLACK_KNIGHT:
         print("It is a black_knight")
     elif piece == PieceType.BLACK_BISHOP:
@@ -92,23 +92,23 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     move_dir = move_dir_finder(cur_pos, next_pos)
     print(move_dir) #How can I use this?
-    print(piece_at_next_location)
+    print(f"Piece value: {piece_at_next_location}")
     if player == "W":
         print("Player White")
         # Can only go up and capture diagonally
             # Step left to capture
         if (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == (cur_pos[COL] - 1)):
-            if ((piece_at_next_location != PieceType.EMPTY) and ((piece_at_next_location >= PieceType.BLACK_PAWN) and (piece_at_next_location <= PieceType.BLACK_KING))):
+            if ((piece_at_next_location != PieceType.EMPTY.value) and ((piece_at_next_location >= PieceType.BLACK_PAWN.value) and (piece_at_next_location <= PieceType.BLACK_KING.value))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == cur_pos[COL]):
-            if (piece_at_next_location == PieceType.EMPTY):
+            if (piece_at_next_location == PieceType.EMPTY.value):
                 print("Forward move once")
                 return True
             # Step right to capture
         elif (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == (cur_pos[COL] + 1)):
-            if ((piece_at_next_location != PieceType.EMPTY) and ((piece_at_next_location >= PieceType.BLACK_PAWN) and (piece_at_next_location <= PieceType.BLACK_KING))):
+            if ((piece_at_next_location != PieceType.EMPTY.value) and ((piece_at_next_location >= PieceType.BLACK_PAWN.value) and (piece_at_next_location <= PieceType.BLACK_KING.value))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[ROW] == 6) and # For initial double move
@@ -120,17 +120,17 @@ def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
         print("Player Black")
             # Step left to capture
         if (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == (cur_pos[COL] + 1)):
-            if ((piece_at_next_location != PieceType.EMPTY) and ((piece_at_next_location >= PieceType.WHITE_PAWN) and (piece_at_next_location <= PieceType.WHITE_KING))):
+            if ((piece_at_next_location != PieceType.EMPTY.value) and ((piece_at_next_location >= PieceType.WHITE_PAWN.value) and (piece_at_next_location <= PieceType.WHITE_KING.value))):
                 print("Move left and up once")
                 return True
             # Forward move
         elif (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == cur_pos[COL]):
-            if (piece_at_next_location == PieceType.EMPTY):
+            if (piece_at_next_location == PieceType.EMPTY.value):
                 print("Forward move once")
                 return True
                 # Step right to capture
         elif (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == (cur_pos[COL] - 1)):
-            if ((piece_at_next_location != PieceType.EMPTY) and ((piece_at_next_location >= PieceType.WHITE_PAWN) and (piece_at_next_location <= PieceType.WHITE_KING))):
+            if ((piece_at_next_location != PieceType.EMPTY.value) and ((piece_at_next_location >= PieceType.WHITE_PAWN.value) and (piece_at_next_location <= PieceType.WHITE_KING.value))):
                 print("Move right & up once")
                 return True
         elif ((cur_pos[ROW] == 1) and # For initial double move
