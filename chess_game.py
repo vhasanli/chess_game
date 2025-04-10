@@ -6,8 +6,8 @@ def pos_to_value():
 
 def get_move():
 
-    player = int(input("Enter player: 0 for white, 1 for black: "))
-    piece = int(input("Enter piece you'd like to move: "))
+    player = input("Enter player: W for white or B for black: ")
+    piece = PieceType[input("Enter piece you'd like to move (Ex: WHITE_PAWN): ")]
 
     # Prompt the user to enter four values (current row, current column, next row, next column)
     move_input = input("Enter current row, current column, next row, next column (e.g., 1 2 3 4): ")
@@ -27,7 +27,7 @@ def attempt_move(board, player, piece, cur_pos, next_pos):
 
     if legal:
         board[next_pos[X]][next_pos[Y]] =  board[cur_pos[X]][cur_pos[Y]]
-        board[cur_pos[X]][cur_pos[Y]] = 0 # clear old position
+        board[cur_pos[X]][cur_pos[Y]] = PieceType.EMPTY # clear old position
         print("Legal Move!")
     else:
         print("Illegal Move!")
@@ -35,7 +35,10 @@ def attempt_move(board, player, piece, cur_pos, next_pos):
 
 def show_board():
     for row in board:
-        print(row)
+        for col in row:
+            print(col.value, end=' ')
+        print()
+
 
 while True:
     print("############################")
