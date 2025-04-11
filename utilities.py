@@ -1,6 +1,4 @@
-from chess_data_structures import Player, MoveType, ROW, COL
-
-
+from chess_data_structures import Player, MoveType, PieceType, ROW, COL
 
 def is_opposite_piece(player, piece_at_next_location):
     if (player == Player.WHITE) and (piece_at_next_location >= 7 and piece_at_next_location <= 12):
@@ -40,9 +38,11 @@ def move_dir_finder(cur_pos, next_pos):
     return move_type
 
 def move_legal_algo(board, cur_pos, next_pos):
-    # for row in range(cur_pos[ROW] - next_pos[ROW]):
-    #     tmp_piece = board[(cur_pos[ROW] - (row + 1))][next_pos[COL]]
-    #     if tmp_piece > 0 and 
-    #     print(tmp_piece)
-        
-    return True
+    counter = 0
+    for row in range(cur_pos[ROW] - next_pos[ROW]):
+        tmp_piece = board[(cur_pos[ROW] - (row + 1))][next_pos[COL]]
+        if tmp_piece != PieceType.EMPTY:
+            print(f"tmp_piece: {tmp_piece}")
+            return counter
+        counter+=1
+    return counter
