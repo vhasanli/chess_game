@@ -36,23 +36,24 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_king")
 
 
-def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
+def num_steps_to_obstacle(board, player, cur_pos, next_pos):
     if player == "W":
-        # Forward move
         rook_move_dir = move_dir_finder(cur_pos, next_pos)
+
         # if rook move is legal then proceed, else return False
-        if (rook_move_dir >= MoveType.UP) and (rook_move_dir <= MoveType.RIGHT):
-            legal = move_legal_algo(board, cur_pos, next_pos)
-            legal = True
-            if legal:
-                if ((piece_at_next_location == 0) or ((piece_at_next_location >= 7) and (piece_at_next_location <= 12))):
-                    print("Rook move or capture legal")
-            return True
+        if (rook_move_dir == MoveType.UP) or (rook_move_dir == MoveType.DOWN) or (rook_move_dir == MoveType.LEFT) or (rook_move_dir == MoveType.RIGHT):
+            count = move_legal_algo(board, cur_pos, next_pos)
+            return count
     elif player == "B":
         pass
     else:   
         pass
     return False
+
+def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
+    count = num_steps_to_obstacle(board, player, cur_pos, next_pos)
+    print(count)
+    return True
 
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     move_dir = move_dir_finder(cur_pos, next_pos)
