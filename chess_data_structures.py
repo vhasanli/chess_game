@@ -26,6 +26,11 @@ class MoveType(Enum):
     DOWN_LEFT = 6
     DOWN_RIGHT = 7
 
+class Player(Enum):
+    WHITE = 0
+    BLACK = 1
+
+    
 # board = [
 #     [PieceType.BLACK_ROOK, PieceType.black_knight.value, PieceType.black_bishop.value, PieceType.black_queen.value, PieceType.black_king.value, PieceType.black_bishop.value, PieceType.black_knight.value, PieceType.black_rook.value],  # 8th rank (black pieces)
 #     [PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value, PieceType.black_pawn.value],  # 7th rank
