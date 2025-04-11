@@ -1,8 +1,6 @@
-from chess_data_structures import MoveType, PieceType, Player
-from utilities import is_opposite_piece
+from chess_data_structures import MoveType, PieceType, Player, ROW, COL
+from utilities import is_opposite_piece, move_dir_finder, move_legal_algo
 
-ROW = 0
-COL = 1
 
 def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     piece_at_next_location = board[next_pos[ROW]][next_pos[COL]]
@@ -38,42 +36,6 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_king")
 
 
-def move_dir_finder(cur_pos, next_pos):
-    if (cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] == next_pos[COL]):
-        move_type = MoveType.UP
-        print("UP move")
-    elif (cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] == next_pos[COL]):
-        move_type = MoveType.DOWN
-        print("DOWN move")
-    elif (cur_pos[COL] > next_pos[COL]) and (cur_pos[ROW] == next_pos[ROW]):
-        move_type = MoveType.LEFT
-        print("LEFT move")
-    elif (cur_pos[COL] < next_pos[COL]) and (cur_pos[ROW] == next_pos[ROW]):
-        move_type = MoveType.RIGHT
-        print("RIGHT move")
-    elif (cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL]):
-        move_type = MoveType.UP_LEFT
-        print("UP and LEFT diagonal move")
-    elif (cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL]):
-        move_type = MoveType.DOWN_LEFT
-        print("DOWN and LEFT diagonal move")
-    elif (cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] < next_pos[COL]):
-        move_type = MoveType.UP_RIGHT
-        print("UP and RIGHT diagonal move")
-    elif (cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL]):
-        move_type = MoveType.DOWN_RIGHT
-        print("DOWN and RIGHT diagonal move")
-
-    return move_type
-
-def move_legal_algo(board, cur_pos, next_pos):
-    # for row in range(cur_pos[ROW] - next_pos[ROW]):
-    #     tmp_piece = board[(cur_pos[ROW] - (row + 1))][next_pos[COL]]
-    #     if tmp_piece > 0 and 
-    #     print(tmp_piece)
-        
-    return True
-
 def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     if player == "W":
         # Forward move
@@ -95,7 +57,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     move_dir = move_dir_finder(cur_pos, next_pos)
     print(move_dir) #How can I use this?
-    print(f"Piece value: {piece_at_next_location}")
+  
     if player == "W":
         print("Player White")
         # Can only go up and capture diagonally
