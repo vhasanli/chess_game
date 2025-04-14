@@ -45,3 +45,19 @@ def move_legal_algo(board, cur_pos, next_pos):
             return counter
         counter+=1
     return counter
+
+
+def tbd(index, player, pos, next_pos, piece_at_next_location):
+    if (pos != PieceType.EMPTY):
+        # is final position == to this non zero value position
+        if (index == next_pos[ROW]):
+            is_opposite = is_opposite_piece(player, piece_at_next_location.value)
+            if is_opposite:
+                return True
+            else:
+                print("Cannot capture your own piece")
+                return False
+    
+        else:
+            print("Obstacle: Cannot move over other pieces!")
+            return False
