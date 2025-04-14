@@ -51,9 +51,65 @@ def num_steps_to_obstacle(board, player, cur_pos, next_pos):
     return False
 
 def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
-    count = num_steps_to_obstacle(board, player, cur_pos, next_pos)
-    print(count)
-    return True
+    # Rook can move up, down, left, right. As long as there is no obstacle.
+    # If obsticle is same side, rook can move till the obsticle.
+    # If opposite side, it can capture.
+    # UP or DOWN
+    if cur_pos[COL] == next_pos[COL]:
+        if cur_pos[ROW] < next_pos[ROW]: #DOWN
+            for i in range (cur_pos[ROW] + 1, next_pos[ROW] + 1):
+                tmp_pos = board[i][cur_pos[COL]]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    if (i == next_pos[ROW]):
+                        is_opposite = is_opposite_piece(player, piece_at_next_location)
+                        if is_opposite:
+                            return True
+                        else:
+                            print("Cannot capture your own piece")
+                            return False
+                
+                    else:
+                        print("Obstacle: Cannot move over other pieces!")
+                        return False
+            else:
+                if (i == next_pos[ROW]):
+                    return True
+        else: # UP
+            for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+                tmp_pos = board[i][cur_pos[COL]]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    if (i == next_pos[ROW]):
+                        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
+                        if is_opposite:
+                            return True
+                        else:
+                            print("Cannot capture your own piece")
+                            return False
+                
+                    else:
+                        print("Obstacle: Cannot move over other pieces!")
+                        return False
+                else:
+                    if (i == next_pos[ROW]):
+                        return True
+                       
+    else: # LEFT or RIGHT
+        if cur_pos[COL] < next_pos[COL]: # LEFT
+            for i in range (cur_pos[COL], next_pos[COL] + 1):
+                print(i)
+        else: # RIGHT
+            for i in range (cur_pos[COL], next_pos[COL] - 1,  -1):
+                print(i)
+    # 1. Need to check every piece along the way. Stop when there is an obsticle.
+    # 2. If move is beyod the obsticle, it is an illegal move
+        #loop through each pieces up to the next_pos
+    
+
+    # 3. In capturing, If obsticle is opposite, capture. if own piece, an illegal move.
+
+
 
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     move_dir = move_dir_finder(cur_pos, next_pos)
