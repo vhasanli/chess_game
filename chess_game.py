@@ -37,10 +37,10 @@ def show_board():
 
 while True:
     print("############################")
-    print("---------Chess Game---------")
+    print("--------Chess Engine--------")
     print("############################")
     show_board()
 
     cur_pos, next_pos, player, piece = get_move()
-    
+      
     attempt_move(board, player, piece, cur_pos, next_pos)
