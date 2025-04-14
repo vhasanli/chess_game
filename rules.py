@@ -62,7 +62,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
                     if (i == next_pos[ROW]):
-                        is_opposite = is_opposite_piece(player, piece_at_next_location)
+                        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
                         if is_opposite:
                             return True
                         else:
@@ -96,10 +96,26 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                         return True
                        
     else: # LEFT or RIGHT
-        if cur_pos[COL] < next_pos[COL]: # LEFT
-            for i in range (cur_pos[COL], next_pos[COL] + 1):
-                print(i)
-        else: # RIGHT
+        if cur_pos[COL] < next_pos[COL]: # RIGHT
+            for i in range (cur_pos[COL] + 1, next_pos[COL] + 1):
+                tmp_pos = board[cur_pos[ROW]][i]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    if (i == next_pos[COL]):
+                        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
+                        if is_opposite:
+                            return True
+                        else:
+                            print("Cannot capture your own piece")
+                            return False
+                
+                    else:
+                        print("Obstacle: Cannot move over other pieces!")
+                        return False
+                else:
+                    if (i == next_pos[COL]):
+                        return True
+        else: # LEFT
             for i in range (cur_pos[COL], next_pos[COL] - 1,  -1):
                 print(i)
     # 1. Need to check every piece along the way. Stop when there is an obsticle.
