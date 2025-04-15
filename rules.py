@@ -1,5 +1,5 @@
 from chess_data_structures import MoveType, PieceType, Player, ROW, COL
-from utilities import is_opposite_piece, move_dir_finder, move_legal_algo
+from utilities import is_opposite_piece, move_dir_finder, move_legal_algo, row_move_good, col_move_good
 
 
 def piece_rule_checker(board, player, piece, cur_pos, next_pos):
@@ -61,17 +61,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                 tmp_pos = board[i][cur_pos[COL]]
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
-                    if (i == next_pos[ROW]):
-                        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
-                        if is_opposite:
-                            return True
-                        else:
-                            print("Cannot capture your own piece")
-                            return False
-                
-                    else:
-                        print("Obstacle: Cannot move over other pieces!")
-                        return False
+                    return row_move_good(i, player, tmp_pos, next_pos, piece_at_next_location)
             else:
                 if (i == next_pos[ROW]):
                     return True
@@ -116,7 +106,24 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                     if (i == next_pos[COL]):
                         return True
         else: # LEFT
-            for i in range (cur_pos[COL], next_pos[COL] - 1,  -1):
+            for i in range (cur_pos[COL] - 1, next_pos[COL] - 1,  -1):
+                tmp_pos = board[cur_pos[ROW]][i]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    if (i == next_pos[COL]):
+                        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
+                        if is_opposite:
+                            return True
+                        else:
+                            print("Cannot capture your own piece")
+                            return False
+                
+                    else:
+                        print("Obstacle: Cannot move over other pieces!")
+                        return False
+                else:
+                    if (i == next_pos[COL]):
+                        return True
                 print(i)
     # 1. Need to check every piece along the way. Stop when there is an obsticle.
     # 2. If move is beyod the obsticle, it is an illegal move
