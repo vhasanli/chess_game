@@ -46,11 +46,12 @@ def move_legal_algo(board, cur_pos, next_pos):
         counter+=1
     return counter
 
-
 def row_col_move_good(index, row_col, player, pos, next_pos, piece_at_next_location):
+    # this function activates when the first non-zero number item is found in a ray
     if (pos != PieceType.EMPTY):
-        # is final position == to this non zero value position
+        # check if the final position equals to the non-zero value position
         if (index == next_pos[row_col]):
+            # check if the piece belong to the opposite player
             is_opposite = is_opposite_piece(player, piece_at_next_location.value)
             if is_opposite:
                 return True
