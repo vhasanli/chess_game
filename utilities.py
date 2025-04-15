@@ -36,16 +36,6 @@ def move_dir_finder(cur_pos, next_pos):
 
     return move_type
 
-def move_legal_algo(board, cur_pos, next_pos):
-    counter = 0
-    for row in range(cur_pos[ROW] - next_pos[ROW]):
-        tmp_piece = board[(cur_pos[ROW] - (row + 1))][next_pos[COL]]
-        if tmp_piece != PieceType.EMPTY:
-            print(f"tmp_piece: {tmp_piece}")
-            return counter
-        counter+=1
-    return counter
-
 def row_col_move_good(index, row_col, player, pos, next_pos, piece_at_next_location):
     # this function activates when the first non-zero number item is found in a ray
     if (pos != PieceType.EMPTY):

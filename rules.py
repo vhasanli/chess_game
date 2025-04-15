@@ -1,5 +1,5 @@
-from chess_data_structures import MoveType, PieceType, Player, ROW, COL
-from utilities import is_opposite_piece, move_dir_finder, move_legal_algo, row_col_move_good
+from chess_data_structures import PieceType, Player, ROW, COL
+from utilities import is_opposite_piece, row_col_move_good
 
 
 def piece_rule_checker(board, player, piece, cur_pos, next_pos):
@@ -9,7 +9,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a empty")
     elif piece == PieceType.WHITE_PAWN:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location.value)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
     elif piece == PieceType.WHITE_BISHOP:
@@ -23,7 +23,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a white_king")
     elif piece == PieceType.BLACK_PAWN:
         print("It is a black_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location.value)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_KNIGHT:
         print("It is a black_knight")
     elif piece == PieceType.BLACK_BISHOP:
@@ -82,22 +82,22 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                         return True
 
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
-    move_dir = move_dir_finder(cur_pos, next_pos)
-    print(move_dir) #How can I use this?
+    # move_dir = move_dir_finder(cur_pos, next_pos)
+    # print(move_dir) #How can I use this?
   
     if player == "W":
         print("Player White")
         # Can only go up and capture diagonally
             # Step left to capture
         if (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == (cur_pos[COL] - 1)):
-            return is_opposite_piece(Player.WHITE, piece_at_next_location)
+            return is_opposite_piece(player, piece_at_next_location.value)
         elif (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == cur_pos[COL]):
-            if (piece_at_next_location == PieceType.EMPTY.value):
+            if (piece_at_next_location == PieceType.EMPTY):
                 print("Forward move once")
                 return True
             # Step right to capture
         elif (next_pos[ROW] == (cur_pos[ROW] - 1)) and (next_pos[COL] == (cur_pos[COL] + 1)):
-            return is_opposite_piece(Player.WHITE, piece_at_next_location)
+            return is_opposite_piece(player, piece_at_next_location.value)
         elif ((cur_pos[ROW] == 6) and # For initial double move
                (next_pos[ROW] == (cur_pos[ROW] - 2)) and
                 cur_pos[COL] == next_pos[COL]):
@@ -107,15 +107,15 @@ def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
         print("Player Black")
             # Step left to capture
         if (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == (cur_pos[COL] + 1)):
-            return is_opposite_piece(Player.BLACK, piece_at_next_location)
+            return is_opposite_piece(player, piece_at_next_location.value)
             # Forward move
         elif (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == cur_pos[COL]):
-            if (piece_at_next_location == PieceType.EMPTY.value):
+            if (piece_at_next_location == PieceType.EMPTY):
                 print("Forward move once")
                 return True
                 # Step right to capture
         elif (next_pos[ROW] == (cur_pos[ROW] + 1)) and (next_pos[COL] == (cur_pos[COL] - 1)):
-            return is_opposite_piece(Player.BLACK, piece_at_next_location)
+            return is_opposite_piece(player, piece_at_next_location.value)
         elif ((cur_pos[ROW] == 1) and # For initial double move
                (next_pos[ROW] == (cur_pos[ROW] + 2)) and
                 cur_pos[COL] == next_pos[COL]):
