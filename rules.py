@@ -45,28 +45,28 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                 tmp_pos = board[i][cur_pos[COL]]
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
-                    return row_col_move_good(i, ROW, player, tmp_pos, next_pos, piece_at_next_location)
-            else:
-                if (i == next_pos[ROW]):
-                    return True
+                    return row_col_move_good(i, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (i == next_pos[ROW]):
+                        return True
         else: # UP
             # loop over each piece in descending order untill non zero value is reached
             for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
                 tmp_pos = board[i][cur_pos[COL]]
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
-                    return row_col_move_good(i, ROW, player, tmp_pos, next_pos, piece_at_next_location)
+                    return row_col_move_good(i, ROW, player, next_pos, piece_at_next_location)
                 else:
                     if (i == next_pos[ROW]):
                         return True
                        
-    else: # LEFT or RIGHT movement
+    elif cur_pos[ROW] == next_pos[ROW]: # LEFT or RIGHT movement
         if cur_pos[COL] < next_pos[COL]: # RIGHT
             for i in range (cur_pos[COL] + 1, next_pos[COL] + 1):
                 tmp_pos = board[cur_pos[ROW]][i]
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
-                    return row_col_move_good(i, COL, player, tmp_pos, next_pos, piece_at_next_location)
+                    return row_col_move_good(i, COL, player, next_pos, piece_at_next_location)
                 else:
                     if (i == next_pos[COL]):
                         return True
@@ -75,12 +75,13 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                 tmp_pos = board[cur_pos[ROW]][i]
                 if (tmp_pos != PieceType.EMPTY):
                     # is final position == to this non zero value position
-                    return row_col_move_good(i, COL, player, tmp_pos, next_pos, piece_at_next_location)
-
+                    return row_col_move_good(i, COL, player, next_pos, piece_at_next_location)
                 else:
                     if (i == next_pos[COL]):
                         return True
-
+    else:
+        print("Illegal move for ROOK!")
+        return False
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     # move_dir = move_dir_finder(cur_pos, next_pos)
     # print(move_dir) #How can I use this?
