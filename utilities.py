@@ -36,20 +36,18 @@ def move_dir_finder(cur_pos, next_pos):
 
     return move_type
 
-def row_col_move_good(index, row_col, player, pos, next_pos, piece_at_next_location):
+def row_col_move_good(index, row_col, player, next_pos, piece_at_next_location):
     # this function activates when the first non-zero number item is found in a ray
-    if (pos != PieceType.EMPTY):
-        # check if the final position equals to the non-zero value position
-        if (index == next_pos[row_col]):
-            # check if the piece belong to the opposite player
-            is_opposite = is_opposite_piece(player, piece_at_next_location.value)
-            if is_opposite:
-                return True
-            else:
-                print("Cannot capture your own piece")
-                return False
-    
+    # check if the final position equals to the non-zero value position
+    if (index == next_pos[row_col]):
+        # check if the piece belong to the opposite player
+        is_opposite = is_opposite_piece(player, piece_at_next_location.value)
+        if is_opposite:
+            return True
         else:
-            print("Obstacle: Cannot move over other pieces!")
+            print("Cannot capture your own piece")
             return False
-        
+
+    else:
+        print("Obstacle: Cannot move over other pieces!")
+        return False
