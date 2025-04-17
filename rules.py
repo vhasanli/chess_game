@@ -12,6 +12,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
+        return knight_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_BISHOP:
         print("It is a white_bishop")
     elif piece == PieceType.WHITE_ROOK:
@@ -35,6 +36,38 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_queen")
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
+
+def knight_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
+    if cur_pos[ROW] == next_pos[ROW] + 2: #UP
+        if cur_pos[COL] == next_pos[COL] + 1: #LEFT
+            return True
+        elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+            return True
+        else:
+            return False    
+    elif cur_pos[ROW] == next_pos[ROW] - 2: # LEFT or RIGHT movement
+        if cur_pos[COL] == next_pos[COL] + 1: #LEFT
+            return True
+        elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+            return True
+        else:
+            return False
+    elif cur_pos[COL] == next_pos[COL] + 2: #LEFT
+        if cur_pos[ROW] == next_pos[ROW] + 1: #UP
+            return True
+        elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+            return True
+        else:
+            return False      
+    elif cur_pos[COL] == next_pos[COL] - 2: #LEFT
+        if cur_pos[ROW] == next_pos[ROW] + 1: #UP
+            return True
+        elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+            return True
+        else:
+            return False   
+    else:
+        return False
 
 def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     # UP or DOWN movement
@@ -82,6 +115,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     else:
         print("Illegal move for ROOK!")
         return False
+
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     # move_dir = move_dir_finder(cur_pos, next_pos)
     # print(move_dir) #How can I use this?
