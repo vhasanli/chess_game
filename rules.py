@@ -12,7 +12,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
-        return knight_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
+        return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_BISHOP:
         print("It is a white_bishop")
     elif piece == PieceType.WHITE_ROOK:
@@ -27,6 +27,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_KNIGHT:
         print("It is a black_knight")
+        return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_BISHOP:
         print("It is a black_bishop")
     elif piece == PieceType.BLACK_ROOK:
@@ -37,35 +38,39 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
 
-def knight_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
-    if cur_pos[ROW] == next_pos[ROW] + 2: #UP
-        if cur_pos[COL] == next_pos[COL] + 1: #LEFT
-            return True
-        elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-            return True
-        else:
-            return False    
-    elif cur_pos[ROW] == next_pos[ROW] - 2: # LEFT or RIGHT movement
-        if cur_pos[COL] == next_pos[COL] + 1: #LEFT
-            return True
-        elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-            return True
+def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
+    #knight can move into next_pos if the value is 0 or is_opposite
+    if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
+        if cur_pos[ROW] == next_pos[ROW] + 2: #UP
+            if cur_pos[COL] == next_pos[COL] + 1: #LEFT
+                return True
+            elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+                return True
+            else:
+                return False    
+        elif cur_pos[ROW] == next_pos[ROW] - 2: # LEFT or RIGHT movement
+            if cur_pos[COL] == next_pos[COL] + 1: #LEFT
+                return True
+            elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+                return True
+            else:
+                return False
+        elif cur_pos[COL] == next_pos[COL] + 2: #LEFT
+            if cur_pos[ROW] == next_pos[ROW] + 1: #UP
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+                return True
+            else:
+                return False      
+        elif cur_pos[COL] == next_pos[COL] - 2: #LEFT
+            if cur_pos[ROW] == next_pos[ROW] + 1: #UP
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+                return True
+            else:
+                return False   
         else:
             return False
-    elif cur_pos[COL] == next_pos[COL] + 2: #LEFT
-        if cur_pos[ROW] == next_pos[ROW] + 1: #UP
-            return True
-        elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-            return True
-        else:
-            return False      
-    elif cur_pos[COL] == next_pos[COL] - 2: #LEFT
-        if cur_pos[ROW] == next_pos[ROW] + 1: #UP
-            return True
-        elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-            return True
-        else:
-            return False   
     else:
         return False
 
