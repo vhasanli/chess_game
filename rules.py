@@ -38,6 +38,11 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
 
+def bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
+    if ((cur_pos[ROW] != next_pos[ROW]) and (cur_pos[COL] != next_pos[COL])):
+        pass
+
+
 def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     #knight can move into next_pos if the value is 0 or is_opposite
     if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
@@ -48,7 +53,7 @@ def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
                 return True
             else:
                 return False    
-        elif cur_pos[ROW] == next_pos[ROW] - 2: # LEFT or RIGHT movement
+        elif cur_pos[ROW] == next_pos[ROW] - 2: #DOWN
             if cur_pos[COL] == next_pos[COL] + 1: #LEFT
                 return True
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
@@ -62,7 +67,7 @@ def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
                 return True
             else:
                 return False      
-        elif cur_pos[COL] == next_pos[COL] - 2: #LEFT
+        elif cur_pos[COL] == next_pos[COL] - 2: #RIGHT
             if cur_pos[ROW] == next_pos[ROW] + 1: #UP
                 return True
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
