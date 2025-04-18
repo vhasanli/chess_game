@@ -15,6 +15,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_BISHOP:
         print("It is a white_bishop")
+        return bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_ROOK:
         print("It is a white_rook")
         return rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
@@ -39,8 +40,26 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_king")
 
 def bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
-    if ((cur_pos[ROW] != next_pos[ROW]) and (cur_pos[COL] != next_pos[COL])):
-        pass
+    #UP and LEFT
+    if ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
+        if ((cur_pos[ROW] - next_pos[ROW]) == (cur_pos[COL] - next_pos[COL])):
+            return True
+    #DOWN and RIGHT
+    elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
+        if ((next_pos[ROW] - cur_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
+            return True
+    #UP and RIGHT
+    elif ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
+        if ((cur_pos[ROW] - next_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
+            return True
+    #DOWN and LEFT
+    elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
+        if ((cur_pos[COL] - next_pos[COL]) == (next_pos[ROW] - cur_pos[ROW])):
+            return True
+    else:
+        print("Illegal move for a Bishop")
+        return False
+        
 
 
 def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
