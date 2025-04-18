@@ -39,9 +39,6 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         print("It is a black_queen")
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
-
-#             # loop over each piece in descending order untill non zero value is reached
-#           for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
  
 def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     #UP and LEFT
