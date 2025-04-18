@@ -62,7 +62,18 @@ def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location
     #DOWN and RIGHT
     elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
         if ((next_pos[ROW] - cur_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
-            return True
+            col_num =  cur_pos[COL] + 1
+            for row_num in range (cur_pos[ROW] + 1, next_pos[ROW] + 1):
+                tmp_pos = board[row_num][col_num]
+                col_num+=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(row_num, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (row_num == next_pos[ROW]):
+                        return True
     #UP and RIGHT
     elif ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
         if ((cur_pos[ROW] - next_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
