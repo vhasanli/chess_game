@@ -144,6 +144,7 @@ def knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
         else:
             return False
     else:
+        print("Illegal move for a Knight")
         return False
 
 def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
@@ -190,7 +191,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
                     if (i == next_pos[COL]):
                         return True
     else:
-        print("Illegal move for ROOK!")
+        print("Illegal move for a ROOK!")
         return False
 
 def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
