@@ -15,7 +15,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_BISHOP:
         print("It is a white_bishop")
-        return bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
+        return bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_ROOK:
         print("It is a white_rook")
         return rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
@@ -39,7 +39,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
 
-def bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
+def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     #UP and LEFT
     if ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
         if ((cur_pos[ROW] - next_pos[ROW]) == (cur_pos[COL] - next_pos[COL])):
@@ -51,7 +51,20 @@ def bishop_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
     #UP and RIGHT
     elif ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
         if ((cur_pos[ROW] - next_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
-            return True
+            cur_row_num =  cur_pos[ROW] - 1
+            for col_num in range(cur_pos[COL] + 1, next_pos[COL] + 1):
+                tmp_pos = board[cur_row_num][col_num]
+                cur_row_num-=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(col_num, COL, player, next_pos, piece_at_next_location)
+                else:
+                    if (col_num == next_pos[COL]):
+                        return True
+
+
     #DOWN and LEFT
     elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
         if ((cur_pos[COL] - next_pos[COL]) == (next_pos[ROW] - cur_pos[ROW])):
