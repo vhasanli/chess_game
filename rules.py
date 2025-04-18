@@ -40,11 +40,25 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
 
+#             # loop over each piece in descending order untill non zero value is reached
+#           for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+ 
 def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     #UP and LEFT
     if ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
         if ((cur_pos[ROW] - next_pos[ROW]) == (cur_pos[COL] - next_pos[COL])):
-            return True
+            col_num =  cur_pos[COL] - 1
+            for row_num in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+                tmp_pos = board[row_num][col_num]
+                col_num-=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(row_num, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (row_num == next_pos[ROW]):
+                        return True
     #DOWN and RIGHT
     elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
         if ((next_pos[ROW] - cur_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
@@ -64,8 +78,6 @@ def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location
                 else:
                     if (col_num == next_pos[COL]):
                         return True
-
-
     #DOWN and LEFT
     elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
         if ((cur_pos[COL] - next_pos[COL]) == (next_pos[ROW] - cur_pos[ROW])):
@@ -81,8 +93,6 @@ def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location
                 else:
                     if (row_num == next_pos[ROW]):
                         return True
-
-            return True
     else:
         print("Illegal move for a Bishop")
         return False
