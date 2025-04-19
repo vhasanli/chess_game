@@ -21,6 +21,7 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_QUEEN:
         print("It is a white_queen")
+        return queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KING:
         print("It is a white_king")
     elif piece == PieceType.BLACK_PAWN:
@@ -37,9 +38,117 @@ def piece_rule_checker(board, player, piece, cur_pos, next_pos):
         return rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_QUEEN:
         print("It is a black_queen")
+        return queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
- 
+
+def queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
+    # UP or DOWN movement
+    if cur_pos[COL] == next_pos[COL]:
+        if cur_pos[ROW] < next_pos[ROW]: #DOWN
+            # loop over each piece in ascending order untill non zero value is reached
+            for i in range (cur_pos[ROW] + 1, next_pos[ROW] + 1):
+                tmp_pos = board[i][cur_pos[COL]]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(i, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (i == next_pos[ROW]):
+                        return True
+        else: # UP
+            # loop over each piece in descending order untill non zero value is reached
+            for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+                tmp_pos = board[i][cur_pos[COL]]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(i, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (i == next_pos[ROW]):
+                        return True
+                       
+    elif cur_pos[ROW] == next_pos[ROW]: # LEFT or RIGHT movement
+        if cur_pos[COL] < next_pos[COL]: # RIGHT
+            for i in range (cur_pos[COL] + 1, next_pos[COL] + 1):
+                tmp_pos = board[cur_pos[ROW]][i]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(i, COL, player, next_pos, piece_at_next_location)
+                else:
+                    if (i == next_pos[COL]):
+                        return True
+        else: # LEFT
+            for i in range (cur_pos[COL] - 1, next_pos[COL] - 1,  -1):
+                tmp_pos = board[cur_pos[ROW]][i]
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(i, COL, player, next_pos, piece_at_next_location)
+                else:
+                    if (i == next_pos[COL]):
+                        return True
+    #UP and LEFT
+    elif ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
+        if ((cur_pos[ROW] - next_pos[ROW]) == (cur_pos[COL] - next_pos[COL])):
+            col_num =  cur_pos[COL] - 1
+            for row_num in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+                tmp_pos = board[row_num][col_num]
+                col_num-=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(row_num, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (row_num == next_pos[ROW]):
+                        return True
+    #DOWN and RIGHT
+    elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
+        if ((next_pos[ROW] - cur_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
+            col_num =  cur_pos[COL] + 1
+            for row_num in range (cur_pos[ROW] + 1, next_pos[ROW] + 1):
+                tmp_pos = board[row_num][col_num]
+                col_num+=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(row_num, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (row_num == next_pos[ROW]):
+                        return True
+    #UP and RIGHT
+    elif ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
+        if ((cur_pos[ROW] - next_pos[ROW]) == (next_pos[COL] - cur_pos[COL])):
+            cur_row_num =  cur_pos[ROW] - 1
+            for col_num in range(cur_pos[COL] + 1, next_pos[COL] + 1):
+                tmp_pos = board[cur_row_num][col_num]
+                cur_row_num-=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(col_num, COL, player, next_pos, piece_at_next_location)
+                else:
+                    if (col_num == next_pos[COL]):
+                        return True
+    #DOWN and LEFT
+    elif ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
+        if ((cur_pos[COL] - next_pos[COL]) == (next_pos[ROW] - cur_pos[ROW])):
+            cur_col_num =  cur_pos[COL] - 1
+            for row_num in range(cur_pos[ROW] + 1, next_pos[ROW] + 1):
+                tmp_pos = board[row_num][cur_col_num]
+                cur_col_num-=1
+                print(tmp_pos)
+
+                if (tmp_pos != PieceType.EMPTY):
+                    # is final position == to this non zero value position
+                    return row_col_move_good(row_num, ROW, player, next_pos, piece_at_next_location)
+                else:
+                    if (row_num == next_pos[ROW]):
+                        return True
+    else:
+        print("Illegal move for a Queen")
+        return False
+        
 def bishop_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     #UP and LEFT
     if ((cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
