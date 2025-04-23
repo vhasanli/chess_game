@@ -1,15 +1,23 @@
 from chess_data_structures import PieceType, Player, ROW, COL
 from utilities import is_opposite_piece, row_col_move_good
+from typing import List
 
 
-def piece_rule_checker(board, player, piece, cur_pos, next_pos):
+def piece_rule_checker(board:List[List[PieceType]], player: str, 
+                       piece:PieceType, cur_pos:tuple, next_pos:tuple)->bool:
+    """
+        this is a comment
+        this is a comment
+        this is a comment
+    """
     piece_at_next_location = board[next_pos[ROW]][next_pos[COL]]
 
     if piece == PieceType.EMPTY:
         print("It is a empty")
     elif piece == PieceType.WHITE_PAWN:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
+        return pawn_rule_checker(player, cur_pos, 
+                                 next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
         return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
@@ -300,7 +308,7 @@ def rook_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
         print("Illegal move for a ROOK!")
         return False
 
-def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location):
+def pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)->bool:
     # move_dir = move_dir_finder(cur_pos, next_pos)
     # print(move_dir) #How can I use this?
   
