@@ -16,8 +16,7 @@ def piece_rule_checker(board:List[List[PieceType]], player: str,
         print("It is a empty")
     elif piece == PieceType.WHITE_PAWN:
         print("It is a white_pawn")
-        return pawn_rule_checker(player, cur_pos, 
-                                 next_pos, piece_at_next_location)
+        return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KNIGHT:
         print("It is a white_knight")
         return knight_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
@@ -32,6 +31,7 @@ def piece_rule_checker(board:List[List[PieceType]], player: str,
         return queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.WHITE_KING:
         print("It is a white_king")
+        return king_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_PAWN:
         print("It is a black_pawn")
         return pawn_rule_checker(player, cur_pos, next_pos, piece_at_next_location)
@@ -49,6 +49,52 @@ def piece_rule_checker(board:List[List[PieceType]], player: str,
         return queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
     elif piece == PieceType.BLACK_KING:
         print("It is a black_king")
+        return king_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location)
+
+def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
+                        next_pos:tuple, piece_at_next_location):
+    if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
+        if cur_pos[ROW] == next_pos[ROW] + 1: #UP
+            if cur_pos[COL] == next_pos[COL]: #UP
+                return True
+            elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
+                return True
+            elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+                return True
+            else:
+                return False    
+        elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+            if cur_pos[COL] == next_pos[COL]: #DOWN
+                return True
+            elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
+                return True
+            elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+                return True
+            else:
+                return False
+        elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
+            if cur_pos[ROW] == next_pos[ROW]: #LEFT
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+                return True
+            else:
+                return False      
+        elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
+            if cur_pos[ROW] == next_pos[ROW]: #RIGHT
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
+                return True
+            elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
+                return True
+            else:
+                return False   
+        else:
+            return False
+    else:
+        print("Illegal move for a King")
+        return False
 
 def queen_rule_checker(board, player, cur_pos, next_pos, piece_at_next_location):
     # UP or DOWN movement
