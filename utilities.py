@@ -1,6 +1,13 @@
 from chess_data_structures import Player, MoveType, PieceType, ROW, COL, board, MIN_ROW, MIN_COL, MAX_ROW, MAX_COL
 from typing import List
 
+def is_opposite_piece(player, piece_at_next_location):
+    if (player == "W") and (piece_at_next_location >= 7 and piece_at_next_location <= 12):
+        return True
+    elif (player == "B") and (piece_at_next_location >= 1 and piece_at_next_location <= 6):
+        return True
+    else:
+        return False
 
 def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
     """
@@ -9,35 +16,31 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
     """
 
     #RIGHT
-    for i in range(next_pos[COL] + 1, MAX_COL + 1):
-        tmp_pos = board[next_pos[ROW]][i]
-        is_opposite_piece = is_opposite_piece(player, tmp_pos.value)
-        print(is_opposite_piece)
-        pass
-
-    # if cur_pos[COL] == next_pos[COL]:
-    #     if cur_pos[ROW] > next_pos[ROW]: #UP
-    #         for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
-    #             tmp_pos = board[i][cur_pos[COL]]
-    #             if (tmp_pos != PieceType.EMPTY):
-    #                 pass
-    #             elif ((tmp_pos != PieceType.BLACK_QUEEN) or (tmp_pos != PieceType.BLACK_ROOK)):
-    #                 pass
-
-    #             else:
-    #                 if (i == next_pos[ROW]):
-    #                     return True
-        
-    return False
-
-
-def is_opposite_piece(player, piece_at_next_location):
-    if (player == "W") and (piece_at_next_location >= 7 and piece_at_next_location <= 12):
-        return True
-    elif (player == "B") and (piece_at_next_location >= 1 and piece_at_next_location <= 6):
-        return True
-    else:
+    # check if opposite side king is located in next_pos[COL] + 1
+        #if so, can't move there
+    piece = board[next_pos[ROW]][next_pos[COL]+1]
+    if ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING) ):
+        print("Illegal Move: Kings cannot be next to each other!")
         return False
+    #check the rest of the positions
+        #if not empty then see if any is_opposite
+            # if is_opposite, ant piece that can have a straigh shot like rook or queen?
+    for i in range(next_pos[COL] + 1, MAX_COL + 1):
+        piece = board[next_pos[ROW]][i]
+        is_opposite = is_opposite_piece(player, piece.value)
+        if is_opposite:
+            if piece != PieceType.EMPTY:
+                if ((piece ==  PieceType.BLACK_QUEEN) or
+                    (piece ==  PieceType.WHITE_QUEEN) or
+                    (piece ==  PieceType.BLACK_ROOK) or
+                    (piece ==  PieceType.WHITE_ROOK)):
+                    print(f"Illegal move: {player} King is checked!")
+                    return False
+
+    return True
+
+
+
 
 def move_dir_finder(cur_pos, next_pos):
     if (cur_pos[ROW] > next_pos[ROW]) and (cur_pos[COL] == next_pos[COL]):
