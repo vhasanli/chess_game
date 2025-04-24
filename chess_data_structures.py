@@ -56,3 +56,8 @@ board = [
 
 ROW = 0
 COL = 1
+
+MIN_ROW = 0
+MIN_COL = 0
+MAX_ROW = 7
+MAX_COL = 7
