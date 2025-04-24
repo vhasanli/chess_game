@@ -1,5 +1,5 @@
 from chess_data_structures import PieceType, Player, ROW, COL
-from utilities import is_opposite_piece, row_col_move_good
+from utilities import is_opposite_piece, row_col_move_good, king_check_checker
 from typing import List
 
 
@@ -53,6 +53,10 @@ def piece_rule_checker(board:List[List[PieceType]], player: str,
 
 def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
                         next_pos:tuple, piece_at_next_location):
+    
+    #King Check checker
+    king_check_checker(board, player,cur_pos, next_pos)
+
     if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
         if cur_pos[ROW] == next_pos[ROW] + 1: #UP
             if cur_pos[COL] == next_pos[COL]: #UP
