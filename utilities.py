@@ -1,4 +1,35 @@
-from chess_data_structures import Player, MoveType, PieceType, ROW, COL
+from chess_data_structures import Player, MoveType, PieceType, ROW, COL, board, MIN_ROW, MIN_COL, MAX_ROW, MAX_COL
+from typing import List
+
+
+def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
+    """
+        Need to check if king will be in check if moves to next_pos.
+        King can't move to a position where it can be targeted by opposite piece
+    """
+
+    #RIGHT
+    for i in range(next_pos[COL] + 1, MAX_COL + 1):
+        tmp_pos = board[next_pos[ROW]][i]
+        is_opposite_piece = is_opposite_piece(player, tmp_pos.value)
+        print(is_opposite_piece)
+        pass
+
+    # if cur_pos[COL] == next_pos[COL]:
+    #     if cur_pos[ROW] > next_pos[ROW]: #UP
+    #         for i in range (cur_pos[ROW] - 1, next_pos[ROW] - 1,  -1):
+    #             tmp_pos = board[i][cur_pos[COL]]
+    #             if (tmp_pos != PieceType.EMPTY):
+    #                 pass
+    #             elif ((tmp_pos != PieceType.BLACK_QUEEN) or (tmp_pos != PieceType.BLACK_ROOK)):
+    #                 pass
+
+    #             else:
+    #                 if (i == next_pos[ROW]):
+    #                     return True
+        
+    return False
+
 
 def is_opposite_piece(player, piece_at_next_location):
     if (player == "W") and (piece_at_next_location >= 7 and piece_at_next_location <= 12):
@@ -51,3 +82,4 @@ def row_col_move_good(index, row_col, player, next_pos, piece_at_next_location):
     else:
         print("Obstacle: Cannot move over other pieces!")
         return False
+
