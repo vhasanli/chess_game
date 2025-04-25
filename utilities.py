@@ -15,29 +15,29 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
         King can't move to a position where it can be targeted by opposite piece
     """
 
-    #RIGHT
-    # check if opposite side king is located in next_pos[COL] + 1
-        #if so, can't move there
-    piece = board[next_pos[ROW]][next_pos[COL]+1]
-    if ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING) ):
-        print("Illegal Move: Kings cannot be next to each other!")
-        return False
-    #check the rest of the positions
-        #if not empty then see if any is_opposite
-            # if is_opposite, ant piece that can have a straigh shot like rook or queen?
-    for i in range(next_pos[COL] + 1, MAX_COL + 1):
-        piece = board[next_pos[ROW]][i]
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:
-            if piece != PieceType.EMPTY:
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_ROOK) or
-                    (piece ==  PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
-                    return False
+    #Need a more complrehensive search functionality. How do I dermine if my next mode doesn't put the king in check.
 
-    return True
+    #UP
+    if (cur_pos[COL] == next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
+        for i in range(next_pos[ROW] - 1, MIN_ROW - 1, -1):
+            piece = board[i][next_pos[COL]]
+            if piece != PieceType.EMPTY:
+                is_opposite = is_opposite_piece(player, piece.value)
+                if is_opposite:                    
+                    if ((i == next_pos[ROW] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
+                        print("Illegal Move: Kings cannot be next to each other!")
+                        return False
+                    else:        
+                        if ((piece ==  PieceType.BLACK_QUEEN) or
+                            (piece ==  PieceType.WHITE_QUEEN) or
+                            (piece ==  PieceType.BLACK_ROOK) or
+                            (piece == PieceType.WHITE_ROOK)):
+                            print(f"Illegal move: {player} King is checked!")
+                            return False
+                        else:
+                            return True
+                else:
+                    return True
 
 
 
