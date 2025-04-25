@@ -60,7 +60,7 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
         if cur_pos[ROW] == next_pos[ROW] + 1: #UP
             if cur_pos[COL] == next_pos[COL]: #UP
                 #King Check checker
-                return king_check_checker(board, player,cur_pos, next_pos)
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
                 return True
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
@@ -69,7 +69,7 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
                 return False    
         elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
             if cur_pos[COL] == next_pos[COL]: #DOWN
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
                 return True
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
@@ -78,7 +78,7 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
                 return False
         elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
             if cur_pos[ROW] == next_pos[ROW]: #LEFT
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
                 return True
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
@@ -88,7 +88,7 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
         elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
             if cur_pos[ROW] == next_pos[ROW]: #RIGHT
                 #King Check checker
-                return king_check_checker(board, player,cur_pos, next_pos)
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
                 return True
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
