@@ -15,7 +15,17 @@ def search_up(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int
         piece = board[i][next_pos[COL]]
         if piece != PieceType.EMPTY:
             return piece, i
-        
+
+#Search UP_LEFT Need to test this
+def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
+    row_num = next_pos[ROW] - 1
+    for col_num in range(next_pos[COL] - 1, MIN_COL - 1, -1):
+        piece = board[next_pos[row_num]][col_num]
+        if piece != PieceType.EMPTY:
+            return piece, col_num
+        else:
+             row_num-=1
+
 #Search DOWN
 def search_down(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
     for i in range(next_pos[ROW] + 1, MAX_ROW + 1):
@@ -42,7 +52,7 @@ def search_right(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, 
 def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
     """
         Need to check if king will be in check if moves to next_pos.
-        King can't move to a position where it can be targeted by opposite piece
+        King can't move to a position where it can be targeted by an opposite piece
     """
     #UP
     if (cur_pos[COL] == next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
@@ -64,6 +74,25 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
         else:
             return True
                 
+    #UP_LEFT
+    if (cur_pos[COL] > next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
+        piece, index = search_up_left(board, next_pos)
+        is_opposite = is_opposite_piece(player, piece.value)
+        if is_opposite:                    
+            if ((index == next_pos[ROW] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
+                print("Illegal Move: Kings cannot be next to each other!")
+                return False
+            else:        
+                if ((piece ==  PieceType.BLACK_QUEEN) or
+                    (piece ==  PieceType.WHITE_QUEEN) or
+                    (piece ==  PieceType.BLACK_ROOK) or
+                    (piece == PieceType.WHITE_ROOK)):
+                    print(f"Illegal move: {player} King is checked!")
+                    return False
+                else:
+                    return True
+        else:
+            return True
 
     #DOWN            
     if (cur_pos[COL] == next_pos[COL]) and ( cur_pos[ROW] < next_pos[ROW]):
