@@ -100,12 +100,12 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
         else:
             return True
                 
-    #UP_LEFT
+    #UP_LEFT CI this one still need fixed.
     if (cur_pos[COL] > next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
-        piece, index = search_up_left(board, next_pos)
+        piece, col_num = search_up_left(board, next_pos)
         is_opposite = is_opposite_piece(player, piece.value)
         if is_opposite:                    
-            if ((index == next_pos[ROW] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
+            if ((col_num == next_pos[COL] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
                 print("Illegal Move: Kings cannot be next to each other!")
                 return False
             else:        
