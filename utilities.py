@@ -29,7 +29,7 @@ def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType
     while row_num >= MIN_ROW or col_num >= MIN_COL:
         piece = board[row_num][col_num]
         if piece != PieceType.EMPTY:
-            return (piece, col_num) if col_num == MIN_ROW else (piece, row_num)
+            return (piece, col_num)
         else:
             row_num -= 1
             col_num -= 1
