@@ -22,13 +22,26 @@ def search_up(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int
 # FE: 4, 7 -> 0, 3
 def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
     row_num = next_pos[ROW] - 1
-    for col_num in range(next_pos[COL] - 1, MIN_COL - 1, -1):
-        piece = board[next_pos[row_num]][col_num]
+    col_num = next_pos[COL] - 1
+
+    while row_num >= MIN_ROW or col_num >= MIN_COL:
+        piece = board[row_num][col_num]
         if piece != PieceType.EMPTY:
             return piece, col_num
         else:
-             row_num-=1
+            row_num -= 1
+            col_num -= 1
+
     return PieceType.EMPTY, -1
+
+
+    # for col_num in range(next_pos[COL] - 1, MIN_COL - 1, -1):
+    #     piece = board[row_num][col_num]
+    #     if piece != PieceType.EMPTY:
+    #         return piece, col_num
+    #     else:
+    #          row_num-=1
+
 
 #Search DOWN
 def search_down(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
