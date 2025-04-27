@@ -18,6 +18,8 @@ def search_up(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int
     return PieceType.EMPTY, -1
 
 #Search UP_LEFT Need to test this
+#CI this will only work if last col ends at MIN_COL, other half of the board doesnt follow this
+# FE: 4, 7 -> 0, 3
 def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
     row_num = next_pos[ROW] - 1
     for col_num in range(next_pos[COL] - 1, MIN_COL - 1, -1):
