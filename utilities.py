@@ -11,15 +11,17 @@ def is_opposite_piece(player, piece_at_next_location):
 
 #Search UP
 def search_up(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
-    for i in range(next_pos[ROW] - 1, MIN_ROW - 1, -1):
-        piece = board[i][next_pos[COL]]
+    row_num = next_pos[ROW] - 1
+    while row_num >= MIN_ROW:
+        piece = board[row_num][next_pos[COL]]
         if piece != PieceType.EMPTY:
-            return piece, i
+            return piece, row_num
+        else:
+            row_num -= 1
+
     return PieceType.EMPTY, -1
 
 #Search UP_LEFT Need to test this
-#CI this will only work if last col ends at MIN_COL, other half of the board doesnt follow this
-# FE: 4, 7 -> 0, 3
 def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
     row_num = next_pos[ROW] - 1
     col_num = next_pos[COL] - 1
@@ -34,39 +36,43 @@ def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType
 
     return PieceType.EMPTY, -1
 
-
-    # for col_num in range(next_pos[COL] - 1, MIN_COL - 1, -1):
-    #     piece = board[row_num][col_num]
-    #     if piece != PieceType.EMPTY:
-    #         return piece, col_num
-    #     else:
-    #          row_num-=1
-
-
 #Search DOWN
 def search_down(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
-    for i in range(next_pos[ROW] + 1, MAX_ROW + 1):
-        piece = board[i][next_pos[COL]]
+    row_num = next_pos[ROW] + 1
+    while row_num >= MAX_ROW:
+        piece = board[row_num][next_pos[COL]]
         if piece != PieceType.EMPTY:
-            return piece, i
+            return piece, row_num
+        else:
+            row_num += 1
+
     return PieceType.EMPTY, -1
         
 #Search LEFT
 def search_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
-    for i in range(next_pos[COL] - 1, MIN_COL - 1, -1):
-        piece = board[next_pos[ROW]][i]
+    col_num = next_pos[COL] - 1
+    while col_num >= MIN_COL:
+        piece = board[next_pos[ROW]][col_num]
         if piece != PieceType.EMPTY:
-            return piece, i
+            return piece, col_num
+        else:
+            col_num -= 1
+
     return PieceType.EMPTY, -1
 
 
 #Search RIGHT
 def search_right(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
-    for i in range(next_pos[COL] + 1, MAX_COL + 1):
-        piece = board[next_pos[ROW]][i]
+    col_num = next_pos[COL] + 1
+    while col_num <= MAX_COL:
+        piece = board[next_pos[ROW]][col_num]
         if piece != PieceType.EMPTY:
-            return piece, i
+            return piece, col_num
+        else:
+            col_num += 1
+
     return PieceType.EMPTY, -1
+
         
 
 def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
@@ -87,7 +93,7 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
                     (piece ==  PieceType.WHITE_QUEEN) or
                     (piece ==  PieceType.BLACK_ROOK) or
                     (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
+                    print(f"Illegal move: {player} King is checked by {piece}!")
                     return False
                 else:
                     return True
@@ -107,7 +113,7 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
                     (piece ==  PieceType.WHITE_QUEEN) or
                     (piece ==  PieceType.BLACK_ROOK) or
                     (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
+                    print(f"Illegal move: {player} King is checked by {piece}!")
                     return False
                 else:
                     return True
@@ -127,7 +133,7 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
                     (piece ==  PieceType.WHITE_QUEEN) or
                     (piece ==  PieceType.BLACK_ROOK) or
                     (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
+                    print(f"Illegal move: {player} King is checked by {piece}!")
                     return False
                 else:
                     return True
@@ -148,7 +154,7 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
                     (piece ==  PieceType.WHITE_QUEEN) or
                     (piece ==  PieceType.BLACK_ROOK) or
                     (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
+                    print(f"Illegal move: {player} King is checked by {piece}!")
                     return False
                 else:
                     return True
@@ -168,7 +174,7 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
                     (piece ==  PieceType.WHITE_QUEEN) or
                     (piece ==  PieceType.BLACK_ROOK) or
                     (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked!")
+                    print(f"Illegal move: {player} King is checked by {piece}!")
                     return False
                 else:
                     return True
