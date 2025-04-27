@@ -15,6 +15,7 @@ def search_up(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int
         piece = board[i][next_pos[COL]]
         if piece != PieceType.EMPTY:
             return piece, i
+    return PieceType.EMPTY, -1
 
 #Search UP_LEFT Need to test this
 def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
@@ -25,6 +26,7 @@ def search_up_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType
             return piece, col_num
         else:
              row_num-=1
+    return PieceType.EMPTY, -1
 
 #Search DOWN
 def search_down(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
@@ -32,6 +34,7 @@ def search_down(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, i
         piece = board[i][next_pos[COL]]
         if piece != PieceType.EMPTY:
             return piece, i
+    return PieceType.EMPTY, -1
         
 #Search LEFT
 def search_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, int]:
@@ -39,6 +42,7 @@ def search_left(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, i
         piece = board[next_pos[ROW]][i]
         if piece != PieceType.EMPTY:
             return piece, i
+    return PieceType.EMPTY, -1
 
 
 #Search RIGHT
@@ -47,6 +51,7 @@ def search_right(board:List[List[PieceType]], next_pos:tuple)->Tuple[PieceType, 
         piece = board[next_pos[ROW]][i]
         if piece != PieceType.EMPTY:
             return piece, i
+    return PieceType.EMPTY, -1
         
 
 def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
