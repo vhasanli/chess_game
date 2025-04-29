@@ -8,6 +8,13 @@ knight_moves = [
     (1, -2), (2, -1)
 ]
 
+king_moves = [
+    (-1, 0), (-1, 1),
+    (0, 1), (1, 1),
+    (1, 0), (1, -1),
+    (0, -1), (-1, -1)
+]
+
 def is_opposite_piece(player, piece):
     if (player == "W") and (piece >= 7 and piece <= 12):
         return True
@@ -31,51 +38,66 @@ def is_king_checked(board:List[List[PieceType]], player, pos:tuple)->bool:
 
     #search up
     piece = search_up(board, pos)
-    checked =  king_checked_by_queen_or_rook(piece, player)
+    checked =  king_checked_by_queen_rook_king(piece, player)
     if checked:
         return True
     
     piece = search_up_right(board, pos)
-    checked =  king_checked_by_queen_or_bishop(piece, player)
+    checked =  king_checked_by_queen_bishop_king(piece, player)
     if checked:
         return True
     
     piece = search_right(board, pos)
-    checked =  king_checked_by_queen_or_rook(piece, player)
+    checked =  king_checked_by_queen_rook_king(piece, player)
     if checked:
         return True
     
 
     piece = search_down_right(board, pos)
-    checked =  king_checked_by_queen_or_bishop(piece, player)
+    checked =  king_checked_by_queen_bishop_king(piece, player)
     if checked:
         return True
 
     piece = search_down(board, pos)
-    checked =  king_checked_by_queen_or_rook(piece, player)
+    checked =  king_checked_by_queen_rook_king(piece, player)
     if checked:
         return True
     
 
     piece = search_down_left(board, pos)
-    checked =  king_checked_by_queen_or_bishop(piece, player)
+    checked =  king_checked_by_queen_bishop_king(piece, player)
     if checked:
         return True
 
     piece = search_left(board, pos)
-    checked =  king_checked_by_queen_or_rook(piece, player)
+    checked =  king_checked_by_queen_rook_king(piece, player)
     if checked:
         return True
     
     piece = search_up_left(board, pos)
-    checked =  king_checked_by_queen_or_bishop(piece, player)
+    checked =  king_checked_by_queen_bishop_king(piece, player)
     if checked:
         return True
     
 
+    #Is king checked by a knight?
     knight_attack_pieces = search_knight_attack(board, pos)
+    for knight in knight_attack_pieces:
+        if player == "W":
+            if knight == PieceType.BLACK_KNIGHT:
+                return True
+        elif player == "B":
+            if knight == PieceType.WHITE_KNIGHT:
+                return True
+        else:
+            return False
+        
+    #Is king checked by a king?
+    return search_king_attack(board, player, pos)
 
-def king_checked_by_queen_or_rook(piece:PieceType, player:str)->bool:
+
+
+def king_checked_by_queen_rook_king(piece:PieceType, player:str)->bool:
     if player == "W":
         if ((piece ==  PieceType.BLACK_QUEEN) or
             (piece ==  PieceType.BLACK_ROOK)):
@@ -88,7 +110,7 @@ def king_checked_by_queen_or_rook(piece:PieceType, player:str)->bool:
             return True
     return False
 
-def king_checked_by_queen_or_bishop(piece:PieceType, player:str)->bool:
+def king_checked_by_queen_bishop_king(piece:PieceType, player:str)->bool:
     if player == "W":
         if ((piece ==  PieceType.BLACK_QUEEN) or
             (piece ==  PieceType.BLACK_BISHOP)):
@@ -224,7 +246,20 @@ def search_knight_attack(board:List[List[PieceType]], pos:tuple)->list:
 
     return knight_attack_pieces
 
-        
+def search_king_attack(board:List[List[PieceType]], player:str, pos:tuple)->bool:
+    for move in king_moves:
+        king_move_row = pos[ROW] + move[ROW]
+        king_move_col = pos[COL] + move[COL]
+        if (MIN_ROW <= king_move_row <= MAX_ROW) and (MIN_COL <= king_move_col <= MAX_COL):
+            piece = board[king_move_row][king_move_col]
+            if player == "W":
+                if piece == PieceType.BLACK_KING:
+                    return True
+            elif player == "B":
+                if piece == PieceType.WHITE_KING:
+                    return True
+            else:
+                return False
 
 def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, next_pos:tuple)->bool:
     """
@@ -233,84 +268,19 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
     """
     #UP
     if (cur_pos[COL] == next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
-        piece, row_num = search_up(board, next_pos)
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:                    
-            if ((row_num == next_pos[ROW] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
-                print("Illegal Move: Kings cannot be next to each other!")
-                return False
-            else:        
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_ROOK) or
-                    (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked by {piece}!")
-                    return False
-                else:
-                    return True
+        is_checked = is_king_checked(board, player, next_pos)
+        if is_checked:
+            return False
         else:
             return True
         
     #DOWN            
     if (cur_pos[COL] == next_pos[COL]) and ( cur_pos[ROW] < next_pos[ROW]):
-        piece, index = search_down(board, next_pos)
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:                    
-            if ((index == next_pos[ROW] + 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
-                print("Illegal Move: Kings cannot be next to each other!")
-                return False
-            else:        
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_ROOK) or
-                    (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked by {piece}!")
-                    return False
-                else:
-                    return True
+        is_checked = is_king_checked(board, player, next_pos)
+        if is_checked:
+            return False
         else:
-            return True
-                
-    #UP_LEFT CI this one still need fixed.
-    if (cur_pos[COL] > next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
-        piece, row_num = search_up_left(board, next_pos)
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:                    
-            if ((row_num == next_pos[ROW] - 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
-                print("Illegal Move: Kings cannot be next to each other!")
-                return False
-            else:        
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_BISHOP) or
-                    (piece == PieceType.WHITE_BISHOP)):
-                    print(f"Illegal move: {player} King is checked by {piece}!")
-                    return False
-                else:
-                    return True
-        else:
-            return True
-
-    #DOWN_RIGHT
-    if ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
-        piece, row_num = search_down_right(board, next_pos)
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:                    
-            if ((row_num == next_pos[ROW] + 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
-                print("Illegal Move: Kings cannot be next to each other!")
-                return False
-            else:        
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_BISHOP) or
-                    (piece == PieceType.WHITE_BISHOP)):
-                    print(f"Illegal move: {player} King is checked by {piece}!")
-                    return False
-                else:
-                    return True
-        else:
-            return True
-        
+            return True        
 
     #LEFT Need to work on this some more, seems to be reversed         
     if (cur_pos[ROW] == next_pos[ROW]) and ( cur_pos[COL] > next_pos[COL]):
@@ -322,25 +292,45 @@ def king_check_checker(board:List[List[PieceType]], player: str, cur_pos:tuple, 
         
     #RIGHT          
     if (cur_pos[ROW] == next_pos[ROW]) and ( cur_pos[COL] < next_pos[COL]):
-        piece, index = search_right(board, next_pos)
-        is_opposite = is_opposite_piece(player, piece.value)
-        if is_opposite:                    
-            if ((index == next_pos[COL] + 1) and ((piece == PieceType.WHITE_KING) or (piece == PieceType.BLACK_KING)) ):
-                print("Illegal Move: Kings cannot be next to each other!")
-                return False
-            else:        
-                if ((piece ==  PieceType.BLACK_QUEEN) or
-                    (piece ==  PieceType.WHITE_QUEEN) or
-                    (piece ==  PieceType.BLACK_ROOK) or
-                    (piece == PieceType.WHITE_ROOK)):
-                    print(f"Illegal move: {player} King is checked by {piece}!")
-                    return False
-                else:
-                    return True
-        else:
-            return True
+       is_checked = is_king_checked(board, player, next_pos)
+       if is_checked:
+           return False
+       else:
+           return True
+
+    #UP_RIGHT
+    if (cur_pos[ROW] > next_pos[ROW]) and ( cur_pos[COL] < next_pos[COL]):
+       is_checked = is_king_checked(board, player, next_pos)
+       if is_checked:
+           return False
+       else:
+           return True
+
+    #UP_LEFT
+    if (cur_pos[COL] > next_pos[COL]) and ( cur_pos[ROW] > next_pos[ROW]):
+       is_checked = is_king_checked(board, player, next_pos)
+       if is_checked:
+           return False
+       else:
+           return True
+
+    #DOWN_RIGHT
+    if ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] < next_pos[COL])):
+       is_checked = is_king_checked(board, player, next_pos)
+       if is_checked:
+           return False
+       else:
+           return True
 
 
+    #DOWN_LEFT
+    if ((cur_pos[ROW] < next_pos[ROW]) and (cur_pos[COL] > next_pos[COL])):
+       is_checked = is_king_checked(board, player, next_pos)
+       if is_checked:
+           return False
+       else:
+           return True
+       
 def row_col_move_good(index, row_col, player, next_pos, piece_at_next_location):
     # this function activates when the first non-zero number item is found in a ray
     # check if the final position equals to the non-zero value position

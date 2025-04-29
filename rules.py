@@ -53,6 +53,7 @@ def piece_rule_checker(board:List[List[PieceType]], player: str,
 
 def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
                         next_pos:tuple, piece_at_next_location)->bool:
+    
     if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
         if cur_pos[ROW] == next_pos[ROW] + 1: #UP
             if cur_pos[COL] == next_pos[COL]: #UP
@@ -61,14 +62,14 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
                 return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             else:
                 return False    
         elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
             if cur_pos[COL] == next_pos[COL]: #DOWN
                 return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
                 return king_check_checker(board, player, cur_pos, next_pos)
             else:
@@ -77,9 +78,9 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
             if cur_pos[ROW] == next_pos[ROW]: #LEFT
                 return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             else:
                 return False      
         elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
@@ -87,9 +88,9 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
                 #King Check checker
                 return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             else:
                 return False   
         else:
