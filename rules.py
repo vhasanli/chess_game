@@ -70,7 +70,7 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
                 return True
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-                return True
+                return king_check_checker(board, player, cur_pos, next_pos)
             else:
                 return False
         elif cur_pos[COL] == next_pos[COL] + 1: #LEFT

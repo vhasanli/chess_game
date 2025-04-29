@@ -1,5 +1,6 @@
 from rules import piece_rule_checker, ROW, COL
 from chess_data_structures import PieceType, board
+from utilities import is_king_checked, find_king
 
 def pos_to_value():
     pass 
@@ -18,15 +19,33 @@ def get_move():
     return cur_pos, next_pos, player, piece
 
 def attempt_move(board, player, piece, cur_pos, next_pos):
-    legal = piece_rule_checker(board, player, piece, cur_pos, next_pos,)
+        #Find the king
+    king_pos = find_king(board, player)
+    isKingChecked = is_king_checked(board, player, king_pos)
+    if player == "W":
+        if  isKingChecked and (piece != PieceType.WHITE_KING):
+            print("King is checked!")
+        else:     
+            legal = piece_rule_checker(board, player, piece, cur_pos, next_pos,)
 
-    if legal:
-        board[next_pos[ROW]][next_pos[COL]] =  board[cur_pos[ROW]][cur_pos[COL]]
-        board[cur_pos[ROW]][cur_pos[COL]] = PieceType.EMPTY # clear old position
-        print("Legal Move!")
+            if legal:
+                board[next_pos[ROW]][next_pos[COL]] =  board[cur_pos[ROW]][cur_pos[COL]]
+                board[cur_pos[ROW]][cur_pos[COL]] = PieceType.EMPTY # clear old position
+                print("Legal Move!")
+            else:
+                print("Illegal Move!")
     else:
-        print("Illegal Move!")
-    pass
+        if  isKingChecked and (piece != PieceType.BLACK_KING):
+            print("King is checked!")
+        else:     
+            legal = piece_rule_checker(board, player, piece, cur_pos, next_pos,)
+
+            if legal:
+                board[next_pos[ROW]][next_pos[COL]] =  board[cur_pos[ROW]][cur_pos[COL]]
+                board[cur_pos[ROW]][cur_pos[COL]] = PieceType.EMPTY # clear old position
+                print("Legal Move!")
+            else:
+                print("Illegal Move!")
 
 def show_board():
     for row in board:
@@ -41,6 +60,8 @@ while True:
     print("############################")
     show_board()
 
+
     cur_pos, next_pos, player, piece = get_move()
-      
+   
     attempt_move(board, player, piece, cur_pos, next_pos)
+
