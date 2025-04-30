@@ -1,5 +1,5 @@
 from chess_data_structures import PieceType, Player, ROW, COL
-from utilities import is_opposite_piece, row_col_move_good, king_check_checker
+from utilities import is_opposite_piece, row_col_move_good, king_check_checker, is_king_checked
 from typing import List
 
 
@@ -57,44 +57,45 @@ def king_rule_checker(board:List[List[PieceType]], player: str, cur_pos:tuple,
     if (piece_at_next_location == PieceType.EMPTY) or (is_opposite_piece(player, piece_at_next_location.value)):
         if cur_pos[ROW] == next_pos[ROW] + 1: #UP
             if cur_pos[COL] == next_pos[COL]: #UP
-                #King Check checker
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             else:
                 return False    
         elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
             if cur_pos[COL] == next_pos[COL]: #DOWN
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             else:
                 return False
         elif cur_pos[COL] == next_pos[COL] + 1: #LEFT
             if cur_pos[ROW] == next_pos[ROW]: #LEFT
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             else:
                 return False      
         elif cur_pos[COL] == next_pos[COL] - 1: #RIGHT
             if cur_pos[ROW] == next_pos[ROW]: #RIGHT
-                #King Check checker
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] + 1: #UP
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             elif cur_pos[ROW] == next_pos[ROW] - 1: #DOWN
-                return king_check_checker(board, player, cur_pos, next_pos)
+                is_checked = is_king_checked(board, player, next_pos)
             else:
                 return False   
-        else:
+            
+        if is_checked:
             return False
+        else:
+            return True
     else:
         print("Illegal move for a King")
         return False
