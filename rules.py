@@ -1,5 +1,5 @@
 from chess_data_structures import PieceType, Player, ROW, COL
-from utilities import is_opposite_piece, row_col_move_good, king_check_checker, is_king_checked
+from utilities import is_opposite_piece, row_col_move_good, is_king_checked
 from typing import List
 
 
